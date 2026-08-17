@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client';
 import {
   ArrowRight,
   BookOpen,
-  Brain,
-  Building2,
+  BriefcaseBusiness,
   CalendarHeart,
+  Check,
   ChevronDown,
   Facebook,
   Heart,
@@ -16,6 +16,7 @@ import {
   Menu,
   Mic2,
   Palette,
+  PenLine,
   Phone,
   Quote,
   Sparkles,
@@ -25,12 +26,20 @@ import {
 import { motion } from 'motion/react';
 import './styles.css';
 
-const oceanImage =
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85';
-const portraitImage =
-  'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/93cac99a-94d2-453b-9af7-d8570f4d5900/Tracey+Saia.jpg?format=1500w';
-const logoImage =
-  'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/cad0cf61-3b7a-4a7b-bb56-f33649573dcb/Tracey+Saia.png?format=1500w';
+const images = {
+  ocean:
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85',
+  portrait:
+    'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/93cac99a-94d2-453b-9af7-d8570f4d5900/Tracey+Saia.jpg?format=1500w',
+  logo:
+    'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/cad0cf61-3b7a-4a7b-bb56-f33649573dcb/Tracey+Saia.png?format=1500w',
+  office:
+    'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?auto=format&fit=crop&w=1800&q=85',
+  materials:
+    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1500&q=85',
+  workshop:
+    'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/a3d02b06-6c9a-4b6c-b91d-837a45586ce8/IMG_1298+2.jpg?format=1500w',
+};
 
 const links = {
   email: 'mailto:tracey@traceyesaia.com',
@@ -42,88 +51,116 @@ const links = {
   newsletter: 'https://www.traceyesaia.com/',
   coloringBook: 'https://www.traceyesaia.com/',
   podcast: 'https://www.traceyesaia.com/',
-  neuroArts: 'https://www.neuroartsblueprint.org',
   aata: 'https://arttherapy.org/',
-  aspen: 'https://www.youtube.com/watch?v=nfH3N_5Q3N4',
+  neuroArts: 'https://www.neuroartsblueprint.org',
   njata: 'https://www.njarttherapy.com/',
   njBoard: 'https://www.njconsumeraffairs.gov/art',
 };
 
-const services = [
-  {
-    title: 'Adults',
-    icon: Heart,
-    text: 'A judgment-free therapeutic space to explore difficult life situations, understand your patterns, and build trust in your decisions.',
-  },
-  {
-    title: 'Teens',
-    icon: Sparkles,
-    text: 'Support for anxiety, stuckness, self-advocacy, and emotional awareness through conversation and visual exploration.',
-  },
-  {
-    title: 'Children',
-    icon: Palette,
-    text: 'Creative, developmentally responsive sessions that help children express what may not yet be available in words.',
-  },
-  {
-    title: 'Corporate Workshops',
-    icon: Building2,
-    text: 'Art-based workshops that help teams slow down, connect, regulate, and develop more compassionate communication.',
-    href: '/services/corporate-workshops',
-  },
-];
-
 const nav = [
-  { label: 'Home', href: '/' },
   {
-    label: 'Services',
+    label: 'Therapy',
     href: '/services',
-    children: [{ label: 'Corporate Workshops', href: '/services/corporate-workshops' }],
+    children: [
+      { label: 'Therapy / Services', href: '/services' },
+      { label: 'What to Expect', href: '/expect' },
+      { label: 'What Is Art Therapy?', href: '/art-therapy' },
+    ],
   },
-  { label: 'What To Expect', href: '/expect' },
-  { label: 'What Is Art Therapy', href: '/art-therapy' },
-  { label: 'Testimonials', href: '/testimonials' },
-  { label: 'About', href: '/about' },
+  { label: 'About Tracey', href: '/about' },
+  { label: 'Rewired', href: '/rewired' },
+  { label: 'Corporate', href: '/services/corporate-workshops' },
   { label: 'Contact', href: '/contact' },
 ];
 
-const resourceCards = [
-  {
-    title: 'Coloring Book',
-    icon: BookOpen,
-    text: 'A creative resource for reflection, regulation, and gentle self-connection.',
-    href: links.coloringBook,
-  },
-  {
-    title: 'Podcasts',
-    icon: Mic2,
-    text: 'Conversations and appearances that make art therapy approachable and human.',
-    href: links.podcast,
-  },
-  {
-    title: 'Newsletter',
-    icon: Mail,
-    text: 'Notes from Tracey with practical ideas for emotional awareness and creative practice.',
-    href: links.newsletter,
-  },
+const concerns = [
+  'Anxiety and overwhelm',
+  'Relationship patterns',
+  'Feeling disconnected from yourself',
+  'Life transitions',
+  'Parenting and family challenges',
+  'Trauma',
+  'Divorce or separation',
+  'Children or teens who are struggling',
+  'Feeling stuck without knowing exactly why',
 ];
 
-const testimonials = [
-  'Tracey creates a safe and non-judgmental space where meaningful change feels possible.',
-  'The work helped me understand the connection between my thoughts, feelings, and behavior.',
-  'Tracey brings experience, steadiness, and genuine care into every session.',
+const therapyGroups = [
+  ['Adults', 'A quiet place to look at the patterns, worries, and inner dialogue that may be shaping your days.'],
+  ['Children', 'Creative, age-sensitive support for children who need more than words to show what is happening.'],
+  ['Teens', 'A respectful space for identity, anxiety, relationships, school stress, and self-advocacy.'],
+  ['Couples and relationships', 'Support for noticing patterns, practicing communication, and making room for honesty.'],
+  ['Parents and families', 'Guidance around connection, boundaries, transitions, and the needs of children or teens.'],
+];
+
+const artTools = [
+  'Conversation',
+  'Drawing',
+  'Writing',
+  'Mind maps',
+  'Timelines',
+  'Images',
+  'Collage',
+  'Color',
+  'Visual metaphors',
+];
+
+const credentials = ['25+ Years of Experience', 'LPAT', 'ATR-BC', 'ATCS', 'Trauma-Informed', 'Art Psychotherapist'];
+
+const quietQuotes = [
+  'Sometimes we understand something intellectually long before we understand how it is affecting us emotionally.',
+  'Art can give shape to something that has been hard to say out loud.',
+  'You do not need to know exactly what you want to work on before reaching out.',
+];
+
+const workshopPrograms = [
+  {
+    title: 'The Art of Receiving',
+    hook: 'A reflective workshop about feedback, support, and what it takes to let useful input in.',
+    challenge: 'Defensiveness, low trust, and teams that struggle to receive feedback.',
+    experience: 'Participants use visual prompts and guided reflection to notice their default response patterns.',
+    takeaways: ['More self-awareness', 'Better feedback conversations', 'Language for support and resistance'],
+    duration: '60-90 minutes',
+    audience: 'Leadership teams, managers, and professional development groups',
+  },
+  {
+    title: 'All Fine',
+    hook: 'A creative look at the gap between how people appear at work and what they may be carrying.',
+    challenge: 'Burnout, emotional masking, and cultures where people say they are fine until they are not.',
+    experience: 'Participants explore stress signals, emotional language, and team norms through art-based exercises.',
+    takeaways: ['Stress awareness', 'Healthier check-ins', 'Practical regulation tools'],
+    duration: '75-120 minutes',
+    audience: 'Employee wellness, HR, offsites, and mental-health initiatives',
+  },
+  {
+    title: 'Creating Your Own Mandala',
+    hook: 'A structured creative process for focus, self-reflection, and grounded leadership.',
+    challenge: 'High-pressure teams that need a restorative but purposeful shared experience.',
+    experience: 'Participants create a personal mandala and reflect on balance, attention, and intention.',
+    takeaways: ['Calmer focus', 'Shared reflection', 'A memorable visual anchor'],
+    duration: '60-90 minutes',
+    audience: 'Women\'s leadership groups, conferences, and team retreats',
+  },
+  {
+    title: 'Motivational Quote',
+    hook: 'A workshop that turns personal values into a visible reminder of purpose and resilience.',
+    challenge: 'Teams that need renewed energy, clarity, or connection to mission.',
+    experience: 'Participants choose meaningful language and pair it with color, image, and composition.',
+    takeaways: ['Values clarity', 'Creative confidence', 'Individual and group insight'],
+    duration: '45-75 minutes',
+    audience: 'Conferences, wellness days, and employee experience programs',
+  },
 ];
 
 function App() {
   const [path, setPath] = useState(window.location.pathname);
+  const page = useMemo(() => routeFor(path), [path]);
 
   useEffect(() => {
     const onPop = () => setPath(window.location.pathname);
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
-
-  const page = useMemo(() => routeFor(path), [path]);
 
   const navigate = (href: string) => {
     window.history.pushState({}, '', href);
@@ -141,14 +178,15 @@ function App() {
 }
 
 function routeFor(path: string) {
-  if (path === '/services') return ServicesPage;
-  if (path === '/services/corporate-workshops' || path === '/corporate-workshops') return WorkshopsPage;
+  if (path === '/services') return TherapyPage;
   if (path === '/expect' || path === '/what-to-expect-when-you-work-with-tracey') return ExpectPage;
   if (path === '/art-therapy' || path === '/what-is-art-therapy') return ArtTherapyPage;
-  if (path === '/testimonials') return TestimonialsPage;
   if (path === '/about') return AboutPage;
+  if (path === '/rewired') return RewiredPage;
+  if (path === '/services/corporate-workshops' || path === '/corporate-workshops') return CorporatePage;
   if (path === '/contact') return ContactPage;
   if (path === '/course') return RemovedCoursePage;
+  if (path === '/testimonials') return TestimonialsPage;
   return HomePage;
 }
 
@@ -163,16 +201,12 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
   return (
     <header className="site-header">
       <button className="brand" onClick={() => go('/')} aria-label="Tracey E. Saia home">
-        <img src={logoImage} alt="" />
+        <img src={images.logo} alt="" />
       </button>
-
       <nav className="desktop-nav" aria-label="Main navigation">
         {nav.map((item) => (
           <div className="nav-item" key={item.href}>
-            <button
-              className={currentPath === item.href ? 'active' : ''}
-              onClick={() => go(item.href)}
-            >
+            <button className={currentPath === item.href ? 'active' : ''} onClick={() => go(item.href)}>
               {item.label}
               {item.children ? <ChevronDown size={14} /> : null}
             </button>
@@ -188,27 +222,19 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
           </div>
         ))}
       </nav>
-
-      <a className="header-cta" href={links.email}>
-        Let&apos;s Talk
+      <a className="header-link" href={links.email}>
+        Reach Out
       </a>
       <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu">
         {open ? <X /> : <Menu />}
       </button>
-
       {open ? (
-        <motion.nav
-          className="mobile-nav"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          aria-label="Mobile navigation"
-        >
+        <motion.nav className="mobile-nav" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           {nav.flatMap((item) => [item, ...(item.children ?? [])]).map((item) => (
             <button key={item.href} onClick={() => go(item.href)}>
               {item.label}
             </button>
           ))}
-          <a href={links.email}>Let&apos;s Talk</a>
         </motion.nav>
       ) : null}
     </header>
@@ -218,110 +244,169 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
 function HomePage(onNavigate: (href: string) => void) {
   return (
     <>
-      <Hero
-        eyebrow="Tracey Saia LPAT, MS, ATR-BC, ATCS"
-        title="Trust Yourself"
-        body="Art therapy for people ready to make positive change, understand themselves more clearly, and regain a sense of control in their lives."
-        cta="Schedule a Free Introductory Session"
-        onCta={() => onNavigate('/contact')}
-      />
-      <Section eyebrow="Start Here" title="When words are not enough, art can make room.">
-        <div className="split">
-          <Reveal className="copy-stack">
-            <p>
-              Tracey creates a safe and judgment-free therapeutic environment to explore
-              the thoughts, feelings, and behaviors that arise in difficult life situations.
-            </p>
-            <p>
-              Therapy can increase awareness of how thoughts and feelings are connected.
-              Visual exploration gives the brain the why behind feelings, choices, and behaviors.
-            </p>
+      <section className="home-hero">
+        <div className="hero-photo" style={{ backgroundImage: `url("${images.ocean}")` }} />
+        <div className="hero-shade" />
+        <Reveal className="home-hero-copy">
+          <p className="eyebrow">Tracey Saia, LPAT, MS, ATR-BC, ATCS</p>
+          <h1>Therapy is a place to understand yourself a little differently.</h1>
+          <p>
+            I combine psychotherapy, creativity, visual thinking, and more than 25 years of
+            experience to help people notice what is happening inside with more honesty and less judgment.
+          </p>
+          <div className="soft-actions">
+            <button className="soft-button light" onClick={() => onNavigate('/art-therapy')}>
+              Learn About My Approach <ArrowRight size={17} />
+            </button>
+            <button className="text-button light-text" onClick={() => onNavigate('/contact')}>
+              Contact Tracey
+            </button>
+          </div>
+        </Reveal>
+      </section>
+
+      <Section eyebrow="Introduction" title="Hi, I'm Tracey." className="intro-section">
+        <div className="portrait-intro">
+          <Reveal className="portrait-card">
+            <img src={images.portrait} alt="Tracey Saia" />
           </Reveal>
-          <Reveal className="quote-panel">
-            <Quote />
-            <p>“I am not what happened to me, I am what I choose to become.”</p>
-            <span>- Carl Jung</span>
+          <Reveal className="first-person">
+            <p>
+              I create a safe and judgment-free therapeutic environment where we can explore the thoughts,
+              feelings, and behaviors that show up during difficult life situations.
+            </p>
+            <p>
+              I want to help people who are ready to make positive change in their lives. Together, we work
+              toward self-understanding, emotional awareness, and the ability to trust your own decisions.
+            </p>
+            <QuietQuote text={quietQuotes[0]} />
           </Reveal>
         </div>
       </Section>
-      <ServicesGrid limit={4} />
-      <Section eyebrow="Resources" title="A practice that extends beyond the session.">
-        <CardGrid>
-          {resourceCards.map((card) => (
-            <ResourceCard key={card.title} {...card} />
+
+      <Section eyebrow="What Brings People Here" title="People come to therapy for all kinds of reasons.">
+        <Reveal className="concern-cloud">
+          {concerns.map((item) => (
+            <span key={item}>{item}</span>
           ))}
-        </CardGrid>
+        </Reveal>
       </Section>
-      <Section eyebrow="Meet Tracey" title="Prepared, experienced, and deeply human.">
-        <BioBlock onNavigate={onNavigate} />
+
+      <OfficeSection />
+      <ArtTherapyIntro onNavigate={onNavigate} />
+      <Credentials />
+
+      <Section eyebrow="More From Tracey" title="Other ways Tracey's work takes shape.">
+        <div className="feature-pair">
+          <Reveal className="editorial-feature">
+            <BookOpen />
+            <h3>Rewired</h3>
+            <p>
+              A 10-week program about regulation, reflection, and understanding your inner patterns with
+              more clarity and compassion.
+            </p>
+            <button className="text-button" onClick={() => onNavigate('/rewired')}>
+              Learn About Rewired <ArrowRight size={16} />
+            </button>
+          </Reveal>
+          <Reveal className="business-feature">
+            <BriefcaseBusiness />
+            <h3>Corporate Workshops</h3>
+            <p>
+              Experiential workshops for teams, leaders, wellness programs, and conferences that want
+              emotional intelligence to become something people can actually practice.
+            </p>
+            <button className="corporate-button" onClick={() => onNavigate('/services/corporate-workshops')}>
+              Explore Workshops <ArrowRight size={17} />
+            </button>
+          </Reveal>
+        </div>
       </Section>
-      <FinalCta onNavigate={onNavigate} />
     </>
   );
 }
 
-function ServicesPage(onNavigate: (href: string) => void) {
+function TherapyPage() {
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="Support for adults, teens, children, and teams."
-        body="Tracey's work combines clinical experience, creative exploration, and steady therapeutic care."
+        eyebrow="Therapy / Services"
+        title="There is no single reason someone begins therapy."
+        body="Some people arrive with a clear question. Others only know that something feels off. Tracey's work creates room for both."
       />
-      <ServicesGrid />
-      <Section eyebrow="How It Helps" title="Build awareness. Practice regulation. Move forward.">
-        <div className="three-column">
-          {['Anxiety and worry', 'Feeling stuck', 'Emotional overwhelm'].map((item) => (
-            <Reveal className="soft-card" key={item}>
-              <Brain />
-              <h3>{item}</h3>
-              <p>
-                Explore practical and empowering techniques that help you notice what is
-                happening inside and choose your next step with more confidence.
-              </p>
+      <Section eyebrow="Who Tracey Works With" title="Therapy for different ages, relationships, and seasons of life.">
+        <div className="text-list">
+          {therapyGroups.map(([title, text]) => (
+            <Reveal className="text-list-item" key={title}>
+              <h3>{title}</h3>
+              <p>{text}</p>
             </Reveal>
           ))}
         </div>
       </Section>
-      <Section eyebrow="Workshops" title="Corporate workshops now live under Services.">
-        <Reveal className="wide-feature">
-          <Building2 />
-          <div>
-            <h3>Creative workshops for workplace wellbeing</h3>
+      <OfficeSection compact />
+      <Section eyebrow="Common Threads" title="What we notice together often becomes easier to hold.">
+        <div className="two-column-copy">
+          <Reveal>
             <p>
-              Art-based group experiences can help teams reconnect, communicate, and
-              regulate in a way that feels approachable rather than clinical.
+              Therapy can increase awareness of how thoughts and feelings are connected. You may begin to
+              notice the impact of inner dialogue, old stories, family patterns, or stress on the choices
+              available to you.
             </p>
-          </div>
-          <button onClick={() => onNavigate('/services/corporate-workshops')}>
-            View workshops <ArrowRight size={18} />
-          </button>
-        </Reveal>
+          </Reveal>
+          <QuietQuote text="Your negative self-talk may be holding you back, but it can also become something you learn to recognize." />
+        </div>
       </Section>
     </>
   );
 }
 
 function ExpectPage() {
+  const steps = [
+    ['Reaching Out', 'You do not need to have the perfect words. A short message is enough to begin.'],
+    ['Our First Conversation', 'Tracey listens for what you are looking for, what feels hard, and whether the fit feels right.'],
+    ['Your First Session', 'You can talk, reflect, make art, or simply begin with what feels most accessible.'],
+    ['Working Together', 'Over time, you build awareness, practice new skills, and make meaning at a pace that feels safe.'],
+  ];
+
   return (
     <>
       <PageHero
-        eyebrow="What To Expect When You Work With Tracey"
-        title="A grounded process for understanding what is happening within you."
-        body="Sessions are collaborative, creative, and paced around safety, insight, and practical change."
+        eyebrow="What to Expect"
+        title="A first session does not require having everything figured out."
+        body="This page is here to reduce uncertainty. Therapy with Tracey is collaborative, thoughtful, and grounded in safety."
       />
-      <Section eyebrow="The Experience" title="A calm path into deeper self-trust.">
-        <div className="timeline">
-          {[
-            ['First conversation', 'Begin with a free introductory session to understand your needs and fit.'],
-            ['Safe exploration', 'Use conversation and creative reflection to notice thoughts, feelings, and behavior.'],
-            ['Meaning-making', 'Visual explorations help reveal patterns and the why behind reactions and choices.'],
-            ['New practice', 'Build skills for self-advocacy, regulation, and confident decision-making.'],
-          ].map(([title, text], index) => (
-            <Reveal className="timeline-item" key={title}>
+      <section className="office-band">
+        <Reveal className="wide-image">
+          <img src={images.office} alt="A calm therapy office with comfortable seating" />
+        </Reveal>
+        <Reveal className="office-band-copy">
+          <h2>A space to slow down, talk, create, and reflect.</h2>
+          <p>
+            Sessions take place in Tracey's Morristown office, with telehealth available where appropriate.
+            Art materials may be present, but creating art is never a requirement.
+          </p>
+        </Reveal>
+      </section>
+      <Section eyebrow="The Process" title="What happens next.">
+        <div className="process-line">
+          {steps.map(([title, text], index) => (
+            <Reveal className="process-step" key={title}>
               <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="Practical Details" title="Simple information, all in one place.">
+        <div className="detail-strip">
+          {['Morristown office', 'Telehealth when appropriate', 'Free introductory conversation', 'Email or phone to begin'].map((item) => (
+            <Reveal className="detail-item" key={item}>
+              <Check size={18} />
+              {item}
             </Reveal>
           ))}
         </div>
@@ -331,78 +416,298 @@ function ExpectPage() {
 }
 
 function ArtTherapyPage() {
+  const faqs = [
+    ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
+    ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
+    ['Is art therapy just for children?', 'No. Adults, teens, children, families, and groups can all benefit from visual thinking.'],
+    ['Will we still talk?', 'Yes. Conversation remains part of the work. Art simply gives us another way in.'],
+    ['What actually happens?', 'You might draw, write, make a timeline, use images, build a metaphor, or talk through what is present.'],
+  ];
+
   return (
     <>
       <PageHero
         eyebrow="What Is Art Therapy?"
-        title="Art therapy helps people express, understand, and integrate experience."
-        body="Art can reach the parts of us where ordinary language runs out."
+        title="You do not have to be an artist."
+        body="Art therapy is not about making something beautiful. It is about giving shape to what may be difficult to explain."
       />
-      <Section eyebrow="Art Therapy Works For Everyone" title="You do not need to be an artist.">
-        <div className="split">
-          <Reveal className="copy-stack">
-            <p>
-              Art therapy uses creative process, imagery, and therapeutic relationship
-              to support mental health, self-awareness, and emotional growth.
-            </p>
-            <p>
-              The artwork is not judged as good or bad. It becomes a visible record of
-              inner experience, helping clients find language, insight, and choice.
-            </p>
-          </Reveal>
-          <Reveal className="quote-panel">
-            <Quote />
-            <p>“Art washes away from the soul the dust of everyday life.”</p>
-            <span>- Pablo Picasso</span>
-          </Reveal>
-        </div>
-      </Section>
-      <Section eyebrow="Educational Resources" title="Connected to the wider field.">
-        <CardGrid>
-          {[
-            ['American Art Therapy Association', links.aata],
-            ['New Jersey Art Therapy Association', links.njata],
-            ['NeuroArts Blueprint', links.neuroArts],
-            ['The Aspen Institute', links.aspen],
-          ].map(([item, href]) => (
-            <Reveal className="resource-card" key={item}>
-              <Sparkles />
+      <Section eyebrow="Everyday Language" title="Sometimes words are not the easiest place to start.">
+        <div className="art-flow">
+          {['Experience', 'Express', 'Notice', 'Understand'].map((item) => (
+            <Reveal className="flow-card" key={item}>
+              <PenLine />
               <h3>{item}</h3>
-              <p>Reference point for learning more about the art therapy and neuroarts field.</p>
-              <a href={href} target="_blank" rel="noreferrer">
-                Visit resource <ArrowRight size={16} />
-              </a>
             </Reveal>
           ))}
-        </CardGrid>
+        </div>
+      </Section>
+      <section className="image-copy-section">
+        <Reveal className="image-reveal">
+          <img src={images.materials} alt="Art materials arranged on a table" />
+        </Reveal>
+        <Reveal className="copy-panel">
+          <h2>Art therapy can include many ways of thinking.</h2>
+          <p>
+            Tracey may use visual metaphors, timelines, drawing, writing, collage, color, images, or
+            traditional conversation. The point is not performance. The point is to see something more clearly.
+          </p>
+          <div className="tool-grid">
+            {artTools.map((tool) => (
+              <span key={tool}>{tool}</span>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+      <Section eyebrow="FAQ" title="Questions people often have about art therapy.">
+        <div className="faq-list">
+          {faqs.map(([question, answer]) => (
+            <Reveal className="faq-item" key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </Reveal>
+          ))}
+        </div>
       </Section>
     </>
   );
 }
 
-function WorkshopsPage() {
+function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="Services / Corporate Workshops"
-        title="Creative workplace sessions for teams that need to breathe together."
-        body="Tracey brings art therapy-informed experiences to corporate groups, helping teams practice reflection, communication, and nervous-system awareness."
+        eyebrow="About Tracey"
+        title="Hi, I'm Tracey."
+        body="I am an art psychotherapist, educator, supervisor, facilitator, and someone who believes creative reflection can help people understand themselves with more compassion."
       />
-      <Section eyebrow="For Teams" title="A workshop can be restorative without being fluffy.">
-        <div className="three-column">
+      <Section eyebrow="Tracey the Person" title="Therapy is relational before it is anything else.">
+        <div className="portrait-intro reverse">
+          <Reveal className="first-person">
+            <p>
+              After more than 25 years in this work, I have learned that people are often carrying more than
+              they can easily explain. Creativity can give us a gentle way to approach what feels tangled,
+              hidden, or too familiar to notice.
+            </p>
+            <p>
+              I value honesty, humor, steadiness, and the kind of therapeutic relationship where a person
+              can feel both supported and respectfully challenged.
+            </p>
+            <QuietQuote text="I found I could say things with colour and shapes that I couldn't say any other way." attribution="- Georgia O'Keeffe" />
+          </Reveal>
+          <Reveal className="portrait-card">
+            <img src={images.portrait} alt="Tracey Saia" />
+          </Reveal>
+        </div>
+      </Section>
+      <Credentials />
+      <Section eyebrow="Affiliations" title="Professional grounding for creative clinical work.">
+        <div className="resource-row">
           {[
-            ['Connection', 'Shared creative prompts give teams a low-pressure way to see one another differently.'],
-            ['Regulation', 'Hands-on process helps participants slow down and notice stress signals.'],
-            ['Insight', 'Reflection turns the artwork into conversation, language, and practical next steps.'],
-          ].map(([title, text]) => (
-            <Reveal className="soft-card" key={title}>
-              <Users />
-              <h3>{title}</h3>
-              <p>{text}</p>
+            ['American Art Therapy Association', links.aata],
+            ['New Jersey Art Therapy Association', links.njata],
+            ['Board of Creative Arts and Activities Therapies (NJ)', links.njBoard],
+            ['NeuroArts Blueprint', links.neuroArts],
+          ].map(([title, href]) => (
+            <a className="resource-link" href={href} target="_blank" rel="noreferrer" key={title}>
+              {title}
+            </a>
+          ))}
+        </div>
+      </Section>
+    </>
+  );
+}
+
+function RewiredPage() {
+  return (
+    <>
+      <PageHero
+        eyebrow="Rewired"
+        title="A 10-week journey toward regulation, reflection, and self-understanding."
+        body="Rewired is a structured program connected to Tracey's belief that change begins when we can notice what is happening within us."
+      />
+      <Section eyebrow="What Is Rewired?" title="A program for understanding patterns from the inside out.">
+        <div className="two-column-copy">
+          <Reveal>
+            <p>
+              Rewired is designed for people who want a clearer relationship with their nervous system,
+              inner dialogue, choices, and emotional patterns.
+            </p>
+            <p>
+              It is public-facing information about the program, separate from participant course controls.
+            </p>
+          </Reveal>
+          <QuietQuote text="You cannot change what is going on around you until you change what is going on within you." attribution="- Zig Ziglar" />
+        </div>
+      </Section>
+      <Section eyebrow="The 10-Week Journey" title="Each week builds a little more language for what is happening inside.">
+        <div className="journey-grid">
+          {Array.from({ length: 10 }, (_, index) => (
+            <Reveal className="journey-card" key={index}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>Week {index + 1}</h3>
+              <p>Reflection, regulation, creative exploration, and practical integration.</p>
             </Reveal>
           ))}
         </div>
       </Section>
+      <Section eyebrow="How to Participate" title="Interested in Rewired?">
+        <Reveal className="program-cta">
+          <p>Reach out to Tracey to ask about upcoming availability, format, and fit.</p>
+          <a className="soft-button" href={links.email}>
+            Ask About Rewired <ArrowRight size={17} />
+          </a>
+        </Reveal>
+      </Section>
+    </>
+  );
+}
+
+function CorporatePage(onNavigate: (href: string) => void) {
+  return (
+    <>
+      <section className="corporate-hero">
+        <Reveal className="corporate-hero-copy">
+          <p className="eyebrow">Corporate Workshops</p>
+          <h1>The Art of Leadership</h1>
+          <h2>Unlocking Emotional Intelligence Through Creativity</h2>
+          <p>
+            Tracey designs experiential workshops that help teams practice emotional intelligence,
+            communication, self-awareness, resilience, leadership, and creative problem-solving.
+          </p>
+          <div className="soft-actions">
+            <button className="corporate-button" onClick={() => onNavigate('/contact')}>
+              Bring Tracey to Your Organization <ArrowRight size={17} />
+            </button>
+            <a className="outline-button" href="#workshops">
+              Explore Workshops
+            </a>
+          </div>
+        </Reveal>
+        <Reveal className="corporate-image">
+          <img src={images.workshop} alt="Tracey facilitating a creative corporate workshop" />
+        </Reveal>
+      </section>
+      <Section eyebrow="Designed For" title="Built for teams that need more than another slide deck.">
+        <div className="designed-grid">
+          {['Leadership teams', 'Employee wellness', 'Team offsites', 'Women\'s leadership groups', 'Mental-health initiatives', 'Conferences', 'Professional development'].map((item) => (
+            <Reveal className="designed-item" key={item}>
+              {item}
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="Workshop Programs" title="Experiential, memorable, and practical." id="workshops">
+        <div className="workshop-grid">
+          {workshopPrograms.map((program) => (
+            <Reveal className="workshop-card" key={program.title}>
+              <h3>{program.title}</h3>
+              <p className="hook">{program.hook}</p>
+              <dl>
+                <dt>Challenge</dt>
+                <dd>{program.challenge}</dd>
+                <dt>Experience</dt>
+                <dd>{program.experience}</dd>
+                <dt>Duration</dt>
+                <dd>{program.duration}</dd>
+                <dt>Ideal Audience</dt>
+                <dd>{program.audience}</dd>
+              </dl>
+              <ul>
+                {program.takeaways.map((takeaway) => (
+                  <li key={takeaway}>
+                    <Check size={15} /> {takeaway}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="What Makes It Different" title="Clinical depth meets creative facilitation.">
+        <div className="outcomes">
+          {['25+ years of psychotherapy experience', 'Art therapy-informed facilitation', 'Emotional intelligence made experiential', 'Virtual or in-person availability', 'A warm but professional room tone'].map((item) => (
+            <Reveal className="outcome" key={item}>
+              <Sparkles />
+              <p>{item}</p>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+      <section className="corporate-close">
+        <Reveal>
+          <h2>Bring Tracey to your organization.</h2>
+          <p>Plan a workshop for your leadership group, offsite, wellness initiative, or conference.</p>
+          <button className="corporate-button" onClick={() => onNavigate('/contact')}>
+            Discuss a Workshop <ArrowRight size={18} />
+          </button>
+        </Reveal>
+      </section>
+    </>
+  );
+}
+
+function ContactPage() {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', reason: 'Therapy', message: '' });
+
+  const submit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nReaching out about: ${form.reason}\n\n${form.message}`,
+    );
+    window.location.href = `${links.email}?subject=${encodeURIComponent(`Website inquiry: ${form.reason}`)}&body=${body}`;
+  };
+
+  return (
+    <>
+      <PageHero
+        eyebrow="Contact"
+        title="Reach out when you're ready."
+        body="You do not need to know exactly what you want to work on before contacting Tracey."
+      />
+      <section className="contact-layout">
+        <Reveal className="contact-aside">
+          <img src={images.portrait} alt="Tracey Saia" />
+          <h2>Let's talk.</h2>
+          <p>Therapy, Rewired, workshops, speaking, or a question that does not fit neatly anywhere.</p>
+          <a href={links.phone}><Phone size={17} /> 973-532-2125</a>
+          <a href={links.email}><Mail size={17} /> tracey@traceyesaia.com</a>
+          <a href={links.map} target="_blank" rel="noreferrer"><MapPin size={17} /> 84 Maple Avenue, Morristown, NJ 07960</a>
+        </Reveal>
+        <Reveal>
+          <form className="contact-form" onSubmit={submit}>
+            <label>
+              Name
+              <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            </label>
+            <label>
+              Email
+              <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            </label>
+            <label>
+              Phone <span>optional</span>
+              <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+            </label>
+            <label>
+              What are you reaching out about?
+              <select value={form.reason} onChange={(e) => setForm({ ...form, reason: e.target.value })}>
+                <option>Therapy</option>
+                <option>Rewired</option>
+                <option>Corporate Workshop</option>
+                <option>Speaking</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label className="full">
+              Message
+              <textarea required rows={7} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+            </label>
+            <button className="soft-button" type="submit">
+              Send Message <ArrowRight size={17} />
+            </button>
+          </form>
+        </Reveal>
+      </section>
     </>
   );
 }
@@ -412,83 +717,14 @@ function TestimonialsPage() {
     <>
       <PageHero
         eyebrow="Testimonials"
-        title="A record of trust, care, and change."
-        body="A refreshed place for client and workshop feedback, presented with warmth and privacy."
+        title="Quiet reflections from people who have worked with Tracey."
+        body="Testimonials are no longer a main navigation item, but the reflections are preserved here and woven through the site."
       />
-      <Section eyebrow="Kind Words" title="The work leaves people feeling seen.">
-        <CardGrid>
-          {testimonials.map((text) => (
-            <Reveal className="testimonial-card" key={text}>
-              <Quote />
-              <p>{text}</p>
-            </Reveal>
+      <Section eyebrow="Reflections" title="A few words about the work.">
+        <div className="quote-grid">
+          {quietQuotes.map((quote) => (
+            <QuietQuote key={quote} text={quote} />
           ))}
-        </CardGrid>
-      </Section>
-    </>
-  );
-}
-
-function AboutPage(onNavigate: (href: string) => void) {
-  return (
-    <>
-      <PageHero
-        eyebrow="About"
-        title="Tracey Saia LPAT, MS, ATR-BC, ATCS"
-        body="A licensed professional art therapist with deep experience helping people explore what they feel, why it matters, and how to move forward."
-      />
-      <Section eyebrow="Meet Tracey" title="Prepared care with creative depth.">
-        <BioBlock onNavigate={onNavigate} />
-      </Section>
-      <Section eyebrow="Affiliations" title="Connected to professional standards and the field.">
-        <CardGrid>
-          {[
-            ['American Art Therapy Association', links.aata],
-            ['New Jersey Art Therapy Association', links.njata],
-            ['Board of Creative Arts and Activities Therapies (NJ)', links.njBoard],
-          ].map(([item, href]) => (
-            <Reveal className="resource-card" key={item}>
-              <CalendarHeart />
-              <h3>{item}</h3>
-              <p>Professional grounding for ethical, informed, art therapy practice.</p>
-              <a href={href} target="_blank" rel="noreferrer">
-                Visit resource <ArrowRight size={16} />
-              </a>
-            </Reveal>
-          ))}
-        </CardGrid>
-      </Section>
-    </>
-  );
-}
-
-function ContactPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Contact"
-        title="Take the first step today."
-        body="Schedule a free introductory session with Tracey or reach out about speaking engagements and corporate workshops."
-      />
-      <Section eyebrow="Let's Talk" title="Tracey E. Saia, A.R.T. Therapy, LLC.">
-        <div className="contact-grid">
-          <Reveal className="contact-card">
-            <Mail />
-            <h3>Email</h3>
-            <a href={links.email}>tracey@traceyesaia.com</a>
-          </Reveal>
-          <Reveal className="contact-card">
-            <Phone />
-            <h3>Phone</h3>
-            <a href={links.phone}>973-532-2125</a>
-          </Reveal>
-          <Reveal className="contact-card">
-            <MapPin />
-            <h3>Office</h3>
-            <a href={links.map} target="_blank" rel="noreferrer">
-              84 Maple Avenue, Morristown, NJ 07960
-            </a>
-          </Reveal>
         </div>
       </Section>
     </>
@@ -500,66 +736,78 @@ function RemovedCoursePage(onNavigate: (href: string) => void) {
     <>
       <PageHero
         eyebrow="Removed"
-        title="The online course page is not part of this new site."
-        body="This redesign keeps Tracey's practice, services, workshops, resources, testimonials, about page, and contact pathways focused and easy to browse."
+        title="The old course page is no longer part of the main site."
+        body="Rewired now has a public-facing program page, while participant login and course controls can stay separate."
       />
-      <section className="final-cta compact">
-        <Reveal>
-          <p className="eyebrow">Next Step</p>
-          <h2>Looking for Tracey&apos;s work?</h2>
-          <p>Start with services or reach out directly.</p>
-          <button className="primary-button" onClick={() => onNavigate('/services')}>
-            View Services <ArrowRight size={18} />
-          </button>
-        </Reveal>
+      <section className="program-cta">
+        <button className="soft-button" onClick={() => onNavigate('/rewired')}>
+          Learn About Rewired <ArrowRight size={17} />
+        </button>
       </section>
     </>
   );
 }
 
-function Hero({
-  eyebrow,
-  title,
-  body,
-  cta,
-  onCta,
-}: {
-  eyebrow: string;
-  title: string;
-  body: string;
-  cta: string;
-  onCta: () => void;
-}) {
+function OfficeSection({ compact = false }: { compact?: boolean }) {
   return (
-    <section className="hero">
-      <motion.div className="hero-bg" style={{ backgroundImage: `url("${oceanImage}")` }} />
-      <div className="hero-overlay" />
-      <motion.div
-        className="hero-content"
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <p className="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p>{body}</p>
-        <div className="hero-actions">
-          <button className="primary-button" onClick={onCta}>
-            {cta} <ArrowRight size={18} />
-          </button>
-          <a className="ghost-button" href={links.instagram} target="_blank" rel="noreferrer">
-            Follow Tracey
-          </a>
-        </div>
-      </motion.div>
+    <section className={compact ? 'office-story compact-office' : 'office-story'}>
+      <Reveal className="office-image">
+        <img src={images.office} alt="A calm therapy office with comfortable seating and natural light" />
+      </Reveal>
+      <Reveal className="office-copy">
+        <p className="eyebrow">Morristown Office</p>
+        <h2>A space to feel comfortable being yourself.</h2>
+        <p>
+          Sessions take place in Tracey's Morristown office, with telehealth available where appropriate.
+          Art materials may be present, but you are not expected to perform, produce, or be good at art.
+        </p>
+      </Reveal>
     </section>
+  );
+}
+
+function ArtTherapyIntro({ onNavigate }: { onNavigate: (href: string) => void }) {
+  return (
+    <Section eyebrow="Art Therapy" title="Sometimes words are not the easiest place to start.">
+      <div className="image-copy-section">
+        <Reveal className="copy-panel">
+          <p>
+            Art therapy is not about being good at art. It is a way of noticing and expressing what may be
+            difficult to access through conversation alone.
+          </p>
+          <div className="tool-grid">
+            {artTools.slice(0, 8).map((tool) => (
+              <span key={tool}>{tool}</span>
+            ))}
+          </div>
+          <button className="text-button" onClick={() => onNavigate('/art-therapy')}>
+            Learn About Art Therapy <ArrowRight size={16} />
+          </button>
+        </Reveal>
+        <Reveal className="image-reveal">
+          <img src={images.materials} alt="Art materials used for reflection and visual exploration" />
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+function Credentials() {
+  return (
+    <Section eyebrow="Credentials" title="Experience that supports the relationship, not the other way around.">
+      <Reveal className="credential-row">
+        {credentials.map((credential) => (
+          <span key={credential}>{credential}</span>
+        ))}
+      </Reveal>
+    </Section>
   );
 }
 
 function PageHero({ eyebrow, title, body }: { eyebrow: string; title: string; body: string }) {
   return (
     <section className="page-hero">
-      <div className="waterline" />
+      <div className="organic-mark" />
       <Reveal className="page-hero-inner">
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
@@ -569,34 +817,21 @@ function PageHero({ eyebrow, title, body }: { eyebrow: string; title: string; bo
   );
 }
 
-function ServicesGrid({ limit }: { limit?: number }) {
-  return (
-    <Section eyebrow="Services" title="Creative therapy for real-life change.">
-      <CardGrid>
-        {services.slice(0, limit).map((service) => (
-          <Reveal className="service-card" key={service.title}>
-            <service.icon />
-            <h3>{service.title}</h3>
-            <p>{service.text}</p>
-            {service.href ? <a href={service.href}>Explore workshops</a> : null}
-          </Reveal>
-        ))}
-      </CardGrid>
-    </Section>
-  );
-}
-
 function Section({
   eyebrow,
   title,
   children,
+  className = '',
+  id,
 }: {
   eyebrow: string;
   title: string;
   children: React.ReactNode;
+  className?: string;
+  id?: string;
 }) {
   return (
-    <section className="section">
+    <section className={`section ${className}`} id={id}>
       <Reveal className="section-heading">
         <p className="eyebrow">{eyebrow}</p>
         <h2>{title}</h2>
@@ -610,80 +845,23 @@ function Reveal({ children, className = '' }: { children: React.ReactNode; class
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 34 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.65, ease: 'easeOut' }}
+      viewport={{ once: true, margin: '-70px' }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
-function CardGrid({ children }: { children: React.ReactNode }) {
-  return <div className="card-grid">{children}</div>;
-}
-
-function ResourceCard({
-  title,
-  text,
-  href,
-  icon: Icon,
-}: {
-  title: string;
-  text: string;
-  href: string;
-  icon: typeof BookOpen;
-}) {
+function QuietQuote({ text, attribution }: { text: string; attribution?: string }) {
   return (
-    <Reveal className="resource-card">
-      <Icon />
-      <h3>{title}</h3>
+    <Reveal className="quiet-quote">
+      <Quote />
       <p>{text}</p>
-      <a href={href} target="_blank" rel="noreferrer">
-        Open resource <ArrowRight size={16} />
-      </a>
+      {attribution ? <span>{attribution}</span> : null}
     </Reveal>
-  );
-}
-
-function BioBlock({ onNavigate }: { onNavigate: (href: string) => void }) {
-  return (
-    <div className="bio">
-      <Reveal className="portrait-wrap">
-        <img src={portraitImage} alt="Tracey Saia" />
-      </Reveal>
-      <Reveal className="copy-stack">
-        <p>
-          Tracey helps people who are ready to make positive change in their lives.
-          Together, clients learn skills that support self-trust, emotional awareness,
-          and more confident decision-making.
-        </p>
-        <p>
-          Her site also collects the parts of her work people often ask about:
-          therapy services, corporate workshops, educational resources, podcast
-          appearances, newsletter writing, social channels, and creative tools.
-        </p>
-        <button className="primary-button" onClick={() => onNavigate('/contact')}>
-          Contact Tracey <ArrowRight size={18} />
-        </button>
-      </Reveal>
-    </div>
-  );
-}
-
-function FinalCta({ onNavigate }: { onNavigate: (href: string) => void }) {
-  return (
-    <section className="final-cta">
-      <Reveal>
-        <p className="eyebrow">Ready</p>
-        <h2>Take the first step today.</h2>
-        <p>Schedule your free introductory session with Tracey.</p>
-        <button className="primary-button" onClick={() => onNavigate('/contact')}>
-          Let&apos;s Talk <ArrowRight size={18} />
-        </button>
-      </Reveal>
-    </section>
   );
 }
 
@@ -692,28 +870,31 @@ function Footer({ onNavigate }: { onNavigate: (href: string) => void }) {
     <footer className="footer">
       <div>
         <strong>Tracey E. Saia, Art Therapy</strong>
+        <p>LPAT, MS, ATR-BC, ATCS</p>
         <p>84 Maple Avenue, Morristown, NJ 07960</p>
-        <p>
-          <a href={links.email}>tracey@traceyesaia.com</a> · <a href={links.phone}>973-532-2125</a>
-        </p>
       </div>
-      <div className="footer-nav">
-        {nav.map((item) => (
-          <button key={item.href} onClick={() => onNavigate(item.href)}>
-            {item.label}
+      <nav className="footer-nav" aria-label="Footer navigation">
+        {[
+          ['Therapy', '/services'],
+          ['About', '/about'],
+          ['Art Therapy', '/art-therapy'],
+          ['Rewired', '/rewired'],
+          ['Corporate', '/services/corporate-workshops'],
+          ['Contact', '/contact'],
+        ].map(([label, href]) => (
+          <button key={href} onClick={() => onNavigate(href)}>
+            {label}
           </button>
         ))}
-      </div>
-      <div className="socials">
-        <a href={links.instagram} aria-label="Instagram" target="_blank" rel="noreferrer">
-          <Instagram />
-        </a>
-        <a href={links.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer">
-          <Linkedin />
-        </a>
-        <a href={links.facebook} aria-label="Facebook" target="_blank" rel="noreferrer">
-          <Facebook />
-        </a>
+      </nav>
+      <div className="footer-contact">
+        <a href={links.email}>tracey@traceyesaia.com</a>
+        <a href={links.phone}>973-532-2125</a>
+        <div className="socials">
+          <a href={links.instagram} aria-label="Instagram" target="_blank" rel="noreferrer"><Instagram /></a>
+          <a href={links.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer"><Linkedin /></a>
+          <a href={links.facebook} aria-label="Facebook" target="_blank" rel="noreferrer"><Facebook /></a>
+        </div>
       </div>
       <p className="copyright">2025 A.R.T. Therapy, LLC. All rights reserved.</p>
     </footer>
