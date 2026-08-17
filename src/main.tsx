@@ -247,12 +247,12 @@ function HomePage(onNavigate: (href: string) => void) {
       <section className="home-hero">
         <div className="hero-photo" style={{ backgroundImage: `url("${images.ocean}")` }} />
         <div className="hero-shade" />
+        <div className="hero-color-field" />
         <Reveal className="home-hero-copy">
           <p className="eyebrow">Tracey Saia, LPAT, MS, ATR-BC, ATCS</p>
-          <h1>Therapy is a place to understand yourself a little differently.</h1>
+          <h1>Trust Yourself</h1>
           <p>
-            I combine psychotherapy, creativity, visual thinking, and more than 25 years of
-            experience to help people notice what is happening inside with more honesty and less judgment.
+            Art therapy and psychotherapy in Morristown, NJ with a creative, grounded, deeply human approach.
           </p>
           <div className="soft-actions">
             <button className="soft-button light" onClick={() => onNavigate('/art-therapy')}>
@@ -262,6 +262,10 @@ function HomePage(onNavigate: (href: string) => void) {
               Contact Tracey
             </button>
           </div>
+        </Reveal>
+        <Reveal className="hero-note">
+          <span>25+ years</span>
+          <p>Psychotherapy, creativity, visual thinking, and room to understand yourself differently.</p>
         </Reveal>
       </section>
 

@@ -8,6 +8,10 @@
   --sage: #6f8a74;
   --sage-deep: #405f4c;
   --clay: #bd725d;
+  --coral: #df8f78;
+  --sea: #4f9aa4;
+  --sun: #e6b86a;
+  --rose: #d995a7;
   --mist: #dfe8df;
   --shell: #eadfd2;
   --business: #223f46;
@@ -216,13 +220,13 @@ p {
   display: grid;
   min-height: calc(100vh - 83px);
   overflow: hidden;
-  padding: clamp(90px, 15vh, 170px) clamp(22px, 6vw, 88px) 58px;
+  padding: clamp(88px, 14vh, 150px) clamp(22px, 6vw, 88px) 54px;
   position: relative;
 }
 
 .hero-photo {
   animation: slowDrift 26s ease-in-out infinite alternate;
-  background-position: center;
+  background-position: center 42%;
   background-size: cover;
   inset: 0;
   position: absolute;
@@ -231,14 +235,25 @@ p {
 
 .hero-shade {
   background:
-    linear-gradient(90deg, rgba(24, 42, 45, 0.78), rgba(24, 42, 45, 0.37) 54%, rgba(24, 42, 45, 0.12)),
-    linear-gradient(0deg, rgba(39, 51, 48, 0.42), transparent 42%);
+    linear-gradient(90deg, rgba(20, 48, 55, 0.66), rgba(47, 105, 111, 0.24) 54%, rgba(235, 168, 128, 0.12)),
+    linear-gradient(0deg, rgba(20, 48, 55, 0.42), transparent 45%);
   inset: 0;
   position: absolute;
 }
 
+.hero-color-field {
+  background:
+    radial-gradient(circle at 18% 34%, rgba(223, 143, 120, 0.48), transparent 22%),
+    radial-gradient(circle at 75% 25%, rgba(230, 184, 106, 0.32), transparent 24%),
+    radial-gradient(circle at 72% 72%, rgba(79, 154, 164, 0.38), transparent 28%);
+  filter: blur(20px);
+  inset: -40px;
+  mix-blend-mode: soft-light;
+  position: absolute;
+}
+
 .home-hero-copy {
-  max-width: 920px;
+  max-width: 720px;
   position: relative;
   z-index: 1;
 }
@@ -250,7 +265,39 @@ p {
 .home-hero-copy p:not(.eyebrow) {
   color: rgba(255, 255, 255, 0.86);
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  max-width: 700px;
+  max-width: 620px;
+  text-shadow: 0 2px 18px rgba(20, 48, 55, 0.26);
+}
+
+.home-hero-copy h1 {
+  color: #fffdf8;
+  font-size: clamp(4.2rem, 12vw, 10rem);
+  text-shadow: 0 4px 30px rgba(20, 48, 55, 0.42);
+}
+
+.hero-note {
+  background: rgba(255, 253, 248, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  bottom: 54px;
+  box-shadow: 0 22px 60px rgba(20, 48, 55, 0.18);
+  color: var(--ink);
+  max-width: 320px;
+  padding: 22px;
+  position: absolute;
+  right: clamp(22px, 6vw, 88px);
+  z-index: 2;
+}
+
+.hero-note span {
+  color: var(--coral);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hero-note p {
+  margin: 10px 0 0;
 }
 
 .soft-actions {
@@ -477,6 +524,26 @@ p {
   padding: 12px 16px;
 }
 
+.concern-cloud span:nth-child(4n + 1) {
+  background: rgba(223, 143, 120, 0.18);
+  border-color: rgba(223, 143, 120, 0.34);
+}
+
+.concern-cloud span:nth-child(4n + 2) {
+  background: rgba(79, 154, 164, 0.16);
+  border-color: rgba(79, 154, 164, 0.3);
+}
+
+.concern-cloud span:nth-child(4n + 3) {
+  background: rgba(230, 184, 106, 0.2);
+  border-color: rgba(230, 184, 106, 0.38);
+}
+
+.concern-cloud span:nth-child(4n + 4) {
+  background: rgba(111, 138, 116, 0.18);
+  border-color: rgba(111, 138, 116, 0.34);
+}
+
 .office-story {
   background: var(--paper);
   padding: clamp(72px, 10vw, 132px) clamp(22px, 6vw, 88px);
@@ -492,7 +559,7 @@ p {
 }
 
 .office-copy {
-  background: rgba(245, 241, 235, 0.85);
+  background: linear-gradient(135deg, rgba(255, 253, 248, 0.94), rgba(223, 143, 120, 0.14));
   border: 1px solid var(--line);
   margin-left: -110px;
   padding: clamp(28px, 4vw, 54px);
@@ -501,7 +568,7 @@ p {
 }
 
 .copy-panel {
-  background: rgba(255, 253, 248, 0.86);
+  background: linear-gradient(135deg, rgba(255, 253, 248, 0.92), rgba(79, 154, 164, 0.12));
   border: 1px solid var(--line);
   padding: clamp(26px, 4vw, 48px);
 }
@@ -530,6 +597,18 @@ p {
 .credential-row span {
   color: var(--sage-deep);
   font-weight: 800;
+}
+
+.credential-row span:nth-child(3n + 1) {
+  background: rgba(79, 154, 164, 0.13);
+}
+
+.credential-row span:nth-child(3n + 2) {
+  background: rgba(223, 143, 120, 0.15);
+}
+
+.credential-row span:nth-child(3n + 3) {
+  background: rgba(230, 184, 106, 0.18);
 }
 
 .feature-pair {
@@ -579,7 +658,11 @@ p {
 }
 
 .business-feature {
-  background: linear-gradient(135deg, #fdfbf7, #eaf0ea);
+  background: linear-gradient(135deg, #fdfbf7, rgba(79, 154, 164, 0.18));
+}
+
+.editorial-feature {
+  background: linear-gradient(135deg, #fffdf8, rgba(230, 184, 106, 0.19));
 }
 
 .text-list {
@@ -975,6 +1058,18 @@ p {
   .corporate-hero {
     min-height: auto;
     padding-top: 92px;
+  }
+
+  .home-hero {
+    padding-bottom: 34px;
+  }
+
+  .hero-note {
+    margin-top: 28px;
+    max-width: none;
+    position: relative;
+    right: auto;
+    bottom: auto;
   }
 
   .portrait-intro,
