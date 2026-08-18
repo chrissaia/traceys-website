@@ -30,13 +30,13 @@ const images = {
   ocean:
     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85',
   portrait:
-    'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/93cac99a-94d2-453b-9af7-d8570f4d5900/Tracey+Saia.jpg?format=1500w',
+    '/assets/tracey-headshot.webp',
   logo:
     'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/cad0cf61-3b7a-4a7b-bb56-f33649573dcb/Tracey+Saia.png?format=1500w',
   office:
-    'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?auto=format&fit=crop&w=1800&q=85',
+    '/assets/tracey-office.webp',
   materials:
-    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1500&q=85',
+    '/assets/child-artwork.webp',
   workshop:
     'https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/a3d02b06-6c9a-4b6c-b91d-837a45586ce8/IMG_1298+2.jpg?format=1500w',
 };
@@ -51,11 +51,28 @@ const links = {
   newsletter: 'http://eepurl.com/jryXtY',
   coloringBook:
     'https://www.amazon.com/Color-My-Feelings-Safari-coloring/dp/B0DX78RFS4/',
-  podcast: 'https://www.traceyesaia.com/',
   aata: 'https://arttherapy.org/',
   njata: 'https://www.njarttherapy.com/',
   anxietyInstitute: 'https://anxietyinstitute.com/',
 };
+
+const podcastLinks = [
+  {
+    title: 'The Body, Feelings, and Art Therapy',
+    href: 'https://www.youtube.com/watch?v=xRrHFFM_lD8',
+    videoId: 'xRrHFFM_lD8',
+  },
+  {
+    title: 'Creative Reflection in Practice',
+    href: 'https://www.youtube.com/watch?v=B_y9XDWqOTc&t=598s',
+    videoId: 'B_y9XDWqOTc',
+  },
+  {
+    title: 'Art Therapy Conversation',
+    href: 'https://www.youtube.com/watch?v=fNLpwfQAlSg',
+    videoId: 'fNLpwfQAlSg',
+  },
+];
 
 const nav = [
   {
@@ -114,12 +131,6 @@ const quietQuotes = [
 ];
 
 const aboutResources = [
-  {
-    title: 'Podcasts',
-    body: 'Listen to conversations and appearances where Tracey talks about art therapy, creativity, and emotional life.',
-    href: links.podcast,
-    icon: Mic2,
-  },
   {
     title: 'Coloring Book',
     body: 'Color My Feelings Safari is a gentle creative resource for naming, noticing, and exploring feelings.',
@@ -581,7 +592,39 @@ function AboutPage() {
         </div>
       </Section>
       <Credentials />
-      <Section eyebrow="Resources & Media" title="Podcasts, coloring book, newsletter, and social media.">
+      <section className="quote-feature">
+        <Reveal>
+          <p className="eyebrow">Tracey On The Work</p>
+          <blockquote>
+            The more research that comes out, the more we're finding that really a lot starts in the body.
+            The idea that feelings and emotions are only in our head, we know is no longer true.
+          </blockquote>
+        </Reveal>
+      </section>
+      <Section eyebrow="Podcasts" title="Conversations with Tracey.">
+        <div className="podcast-grid">
+          {podcastLinks.map((podcast, index) => (
+            <Reveal className="podcast-card" key={podcast.videoId}>
+              <a href={podcast.href} target="_blank" rel="noreferrer" aria-label={`Watch ${podcast.title} on YouTube`}>
+                <img
+                  src={`https://img.youtube.com/vi/${podcast.videoId}/hqdefault.jpg`}
+                  alt=""
+                  loading="lazy"
+                />
+                <span className="play-mark">
+                  <Mic2 size={18} />
+                  Watch
+                </span>
+              </a>
+              <div>
+                <p className="eyebrow">Episode {index + 1}</p>
+                <h3>{podcast.title}</h3>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="Resources & Media" title="Coloring book, newsletter, and social media.">
         <div className="media-grid">
           {aboutResources.map(({ title, body, href, icon: Icon }) => (
             <Reveal className="media-card" key={title}>

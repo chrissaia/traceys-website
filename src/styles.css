@@ -1164,6 +1164,91 @@ p {
   margin: 0 0 20px;
 }
 
+.quote-feature {
+  background:
+    radial-gradient(circle at 86% 18%, rgba(155, 174, 220, 0.26), transparent 24rem),
+    radial-gradient(circle at 18% 72%, rgba(143, 199, 209, 0.3), transparent 26rem),
+    linear-gradient(135deg, #e0f1f4, #fffdf8 54%, #f2eef8);
+  padding: clamp(56px, 8vw, 94px) clamp(22px, 6vw, 88px);
+}
+
+.quote-feature > div {
+  margin: 0 auto;
+  max-width: 980px;
+}
+
+.quote-feature blockquote {
+  color: var(--sea-deep);
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 4.7rem);
+  line-height: 0.98;
+  margin: 16px 0 0;
+  max-width: 950px;
+}
+
+.podcast-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1120px;
+}
+
+.podcast-card {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(230, 184, 106, 0.18), transparent 13rem),
+    linear-gradient(145deg, rgba(255, 253, 248, 0.96), rgba(237, 247, 248, 0.82));
+  border: 1px solid rgba(79, 154, 164, 0.18);
+  box-shadow: 0 20px 48px rgba(56, 95, 94, 0.09);
+  overflow: hidden;
+}
+
+.podcast-card:nth-child(2) {
+  transform: translateY(18px);
+}
+
+.podcast-card a {
+  display: block;
+  position: relative;
+}
+
+.podcast-card img {
+  aspect-ratio: 16 / 10;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.podcast-card a::after {
+  background: linear-gradient(180deg, transparent, rgba(37, 51, 48, 0.5));
+  content: '';
+  inset: 0;
+  position: absolute;
+}
+
+.play-mark {
+  align-items: center;
+  background: rgba(255, 253, 248, 0.9);
+  color: var(--sea-deep);
+  display: inline-flex;
+  font-weight: 850;
+  gap: 8px;
+  left: 18px;
+  padding: 9px 12px;
+  position: absolute;
+  top: 18px;
+  z-index: 1;
+}
+
+.podcast-card div {
+  padding: 22px;
+}
+
+.podcast-card h3 {
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  margin: 0;
+}
+
 .footer {
   background: #253330;
   color: white;
@@ -1299,6 +1384,7 @@ p {
   .two-column-copy,
   .art-flow,
   .media-grid,
+  .podcast-grid,
   .quote-grid,
   .office-band,
   .contact-form,
@@ -1322,6 +1408,10 @@ p {
 
   .journey-grid {
     grid-template-columns: 1fr;
+  }
+
+  .podcast-card:nth-child(2) {
+    transform: none;
   }
 
   .brand img {
