@@ -1054,6 +1054,16 @@ p {
   margin-bottom: 28px;
 }
 
+.contact-aside .contact-logo {
+  background: rgba(255, 253, 248, 0.94);
+  display: block;
+  height: auto;
+  max-width: 320px;
+  object-fit: contain;
+  padding: 28px;
+  width: 100%;
+}
+
 .contact-aside p,
 .contact-aside a {
   color: rgba(255, 255, 255, 0.82);

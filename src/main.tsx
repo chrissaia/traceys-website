@@ -798,7 +798,7 @@ function ContactPage(_: PageProps) {
       />
       <section className="contact-layout">
         <Reveal className="contact-aside">
-          <img src={images.portrait} alt="Tracey Saia" />
+          <img className="contact-logo" src={images.logo} alt="Tracey Saia Art Therapy" />
           <h2>Let's talk.</h2>
           <p>Therapy, Rewired, workshops, speaking, or a question that does not fit neatly anywhere.</p>
           <a href={links.phone}><Phone size={17} /> 973-532-2125</a>
