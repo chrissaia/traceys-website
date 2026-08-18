@@ -202,9 +202,13 @@ const workshopPrograms = [
   },
 ];
 
+type PageProps = {
+  onNavigate: (href: string) => void;
+};
+
 function App() {
   const [path, setPath] = useState(window.location.pathname);
-  const page = useMemo(() => routeFor(path), [path]);
+  const Page = useMemo(() => routeFor(path), [path]);
 
   const navigate = useCallback((href: string) => {
     const url = new URL(href, window.location.origin);
@@ -245,7 +249,9 @@ function App() {
   return (
     <div>
       <Nav currentPath={path} onNavigate={navigate} />
-      <main>{page(navigate)}</main>
+      <main>
+        <Page onNavigate={navigate} />
+      </main>
       <Footer onNavigate={navigate} />
     </div>
   );
@@ -316,7 +322,7 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
   );
 }
 
-function HomePage(onNavigate: (href: string) => void) {
+function HomePage({ onNavigate }: PageProps) {
   return (
     <>
       <section className="home-hero">
@@ -405,7 +411,7 @@ function HomePage(onNavigate: (href: string) => void) {
   );
 }
 
-function TherapyPage() {
+function TherapyPage(_: PageProps) {
   return (
     <>
       <PageHero
@@ -440,7 +446,7 @@ function TherapyPage() {
   );
 }
 
-function ExpectPage() {
+function ExpectPage(_: PageProps) {
   const steps = [
     ['Reaching Out', 'You do not need to have the perfect words. A short message is enough to begin.'],
     ['Our First Conversation', 'Tracey listens for what you are looking for, what feels hard, and whether the fit feels right.'],
@@ -494,7 +500,7 @@ function ExpectPage() {
   );
 }
 
-function ArtTherapyPage() {
+function ArtTherapyPage(_: PageProps) {
   const faqs = [
     ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
     ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
@@ -551,7 +557,7 @@ function ArtTherapyPage() {
   );
 }
 
-function AboutPage() {
+function AboutPage(_: PageProps) {
   return (
     <>
       <PageHero
@@ -586,21 +592,12 @@ function AboutPage() {
             </p>
             <QuietQuote text="I found I could say things with colour and shapes that I couldn't say any other way." attribution="- Georgia O'Keeffe" />
           </Reveal>
-          <Reveal className="portrait-card">
-            <img src={images.portrait} alt="Tracey Saia" />
+          <Reveal className="logo-showcase">
+            <img src={images.logo} alt="Tracey Saia Art Therapy" />
           </Reveal>
         </div>
       </Section>
       <Credentials />
-      <section className="quote-feature">
-        <Reveal>
-          <p className="eyebrow">Tracey On The Work</p>
-          <blockquote>
-            The more research that comes out, the more we're finding that really a lot starts in the body.
-            The idea that feelings and emotions are only in our head, we know is no longer true.
-          </blockquote>
-        </Reveal>
-      </section>
       <Section eyebrow="Podcasts" title="Conversations with Tracey.">
         <div className="podcast-grid">
           {podcastLinks.map((podcast, index) => (
@@ -638,11 +635,21 @@ function AboutPage() {
           ))}
         </div>
       </Section>
+      <section className="quote-feature">
+        <Reveal>
+          <p className="eyebrow">Tracey On The Work</p>
+          <blockquote>
+            As more research comes out, we find that a lot of emotion starts in the body. The idea that
+            feelings and emotions are only in our head is no longer true.
+          </blockquote>
+          <p className="quote-attribution">- Tracey Saia</p>
+        </Reveal>
+      </section>
     </>
   );
 }
 
-function RewiredPage(onNavigate: (href: string) => void) {
+function RewiredPage({ onNavigate }: PageProps) {
   return (
     <>
       <PageHero
@@ -687,7 +694,7 @@ function RewiredPage(onNavigate: (href: string) => void) {
   );
 }
 
-function CorporatePage(onNavigate: (href: string) => void) {
+function CorporatePage({ onNavigate }: PageProps) {
   return (
     <>
       <section className="corporate-hero">
@@ -771,7 +778,7 @@ function CorporatePage(onNavigate: (href: string) => void) {
   );
 }
 
-function ContactPage() {
+function ContactPage(_: PageProps) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', reason: 'Therapy', message: '' });
 
   const submit = (event: React.FormEvent) => {
@@ -836,7 +843,7 @@ function ContactPage() {
   );
 }
 
-function TestimonialsPage() {
+function TestimonialsPage(_: PageProps) {
   return (
     <>
       <PageHero
@@ -855,7 +862,7 @@ function TestimonialsPage() {
   );
 }
 
-function RemovedCoursePage(onNavigate: (href: string) => void) {
+function RemovedCoursePage({ onNavigate }: PageProps) {
   return (
     <>
       <PageHero
