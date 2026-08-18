@@ -202,6 +202,59 @@ const workshopPrograms = [
   },
 ];
 
+const rewiredWeeks = [
+  {
+    title: 'Set Your Intentions',
+    body:
+      'Begin your journey by identifying a personal goal and the emotional intention behind it. This week sets the tone for meaningful growth through guided reflection and visualization.',
+  },
+  {
+    title: 'Beliefs & Expectations',
+    body:
+      'Explore the internal beliefs and quiet assumptions that shape your self-image and actions. Learn how to challenge and reframe the stories that may be holding you back.',
+  },
+  {
+    title: 'Clarify Your Core Values',
+    body:
+      'Identify the values that matter most to you and distinguish them from those you have inherited. Let your values guide your choices and deepen your sense of personal alignment.',
+  },
+  {
+    title: 'Build Awareness',
+    body:
+      'Develop the skill of noticing your thoughts and emotions without judgment. Awareness becomes your superpower for shifting patterns and gaining self-understanding.',
+  },
+  {
+    title: 'Mental Flexibility',
+    body:
+      'Learn how to respond to emotional triggers with grace instead of reactivity. Create morning rituals and grounding mantras to bring ease into your day.',
+  },
+  {
+    title: 'Emotional Granularity',
+    body:
+      'Expand your emotional vocabulary to better understand and express how you feel. Naming your emotions with precision leads to more effective coping and clarity.',
+  },
+  {
+    title: 'The Body Keeps the Score',
+    body:
+      'Connect with how your body holds emotional memory and learn to release tension through breath and somatic awareness. Your body becomes an ally in healing, not just a container for stress.',
+  },
+  {
+    title: 'Build Coping Skills',
+    body:
+      'Assemble a personalized toolkit of coping strategies based on what truly supports you. Learn the difference between numbing and nourishing responses to stress.',
+  },
+  {
+    title: 'Everyday Mindfulness',
+    body:
+      'Practice bringing presence into your daily life, one moment at a time. Discover how pausing before reacting can shift your entire experience.',
+  },
+  {
+    title: 'Integration & Future Self',
+    body:
+      'Reflect on your growth and write a letter to your future self as a reminder of your strength. This final week is a celebration of your transformation and a vision for what is next.',
+  },
+];
+
 type PageProps = {
   onNavigate: (href: string) => void;
 };
@@ -655,17 +708,18 @@ function RewiredPage({ onNavigate }: PageProps) {
       <PageHero
         eyebrow="Rewired"
         title="A 10-week journey toward regulation, reflection, and self-understanding."
-        body="Rewired is a structured program connected to Tracey's belief that change begins when we can notice what is happening within us."
+        body="A practical, low-pressure way to begin moving toward emotional growth with the right tools, support, and space to begin."
       />
       <Section eyebrow="What Is Rewired?" title="A program for understanding patterns from the inside out.">
         <div className="two-column-copy">
           <Reveal>
             <p>
-              Rewired is designed for people who want a clearer relationship with their nervous system,
-              inner dialogue, choices, and emotional patterns.
+              Rewired is designed to help you emotionally regulate by understanding the thoughts and feelings
+              that can make you feel out of control.
             </p>
             <p>
-              The course gives the work a simple rhythm so people can return to the ideas between sessions and keep practicing in ordinary life.
+              Each week includes guided reflection, practical tools for change, and space to reconnect with
+              your values, reframe negative thinking, and cultivate emotional clarity.
             </p>
           </Reveal>
           <QuietQuote text="You cannot change what is going on around you until you change what is going on within you." attribution="- Zig Ziglar" />
@@ -673,15 +727,25 @@ function RewiredPage({ onNavigate }: PageProps) {
       </Section>
       <Section eyebrow="The 10-Week Journey" title="Each week builds a little more language for what is happening inside.">
         <div className="journey-grid">
-          {Array.from({ length: 10 }, (_, index) => (
-            <Reveal className="journey-card" key={index}>
+          {rewiredWeeks.map((week, index) => (
+            <Reveal className="journey-card" key={week.title}>
               <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>Week {index + 1}</h3>
-              <p>Reflection, regulation, creative exploration, and practical integration.</p>
+              <h3>{week.title}</h3>
+              <p>{week.body}</p>
             </Reveal>
           ))}
         </div>
       </Section>
+      <section className="rewired-close">
+        <Reveal>
+          <p className="eyebrow">It All Starts Here</p>
+          <h2>You do not have to have all the answers.</h2>
+          <p>
+            You only need a little more awareness than yesterday, and a place to practice what helps you feel
+            clearer, steadier, and more connected to yourself.
+          </p>
+        </Reveal>
+      </section>
       <Section eyebrow="How to Participate" title="Interested in Rewired?">
         <Reveal className="program-cta">
           <p>Reach out to Tracey to ask about upcoming availability, format, and fit.</p>
