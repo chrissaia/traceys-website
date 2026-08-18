@@ -1172,6 +1172,20 @@ p {
   resize: vertical;
 }
 
+.form-status {
+  font-weight: 800;
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.form-status.success {
+  color: var(--sage-deep);
+}
+
+.form-status.error {
+  color: #9d2f2f;
+}
+
 .resource-row {
   margin: auto;
   max-width: 980px;

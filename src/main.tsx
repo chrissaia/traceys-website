@@ -844,13 +844,38 @@ function CorporatePage({ onNavigate }: PageProps) {
 
 function ContactPage(_: PageProps) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', reason: 'Therapy', message: '' });
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const submit = (event: React.FormEvent) => {
+  const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nReaching out about: ${form.reason}\n\n${form.message}`,
-    );
-    window.location.href = `${links.email}?subject=${encodeURIComponent(`Website inquiry: ${form.reason}`)}&body=${body}`;
+    setFormStatus('sending');
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/tracey@traceyesaia.com', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || 'Not provided',
+          reason: form.reason,
+          message: form.message,
+          _replyto: form.email,
+          _subject: `Website inquiry: ${form.reason}`,
+          _template: 'table',
+        }),
+      });
+
+      if (!response.ok) throw new Error('Contact form submission failed');
+
+      setForm({ name: '', email: '', phone: '', reason: 'Therapy', message: '' });
+      setFormStatus('success');
+    } catch {
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -897,9 +922,17 @@ function ContactPage(_: PageProps) {
               Message
               <textarea required rows={7} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
             </label>
-            <button className="soft-button" type="submit">
-              Send Message <ArrowRight size={17} />
+            <button className="soft-button" type="submit" disabled={formStatus === 'sending'}>
+              {formStatus === 'sending' ? 'Sending...' : 'Send Message'} <ArrowRight size={17} />
             </button>
+            {formStatus === 'success' ? (
+              <p className="form-status success">Thank you. Your message has been sent to Tracey.</p>
+            ) : null}
+            {formStatus === 'error' ? (
+              <p className="form-status error">
+                Something went wrong. Please email Tracey directly at tracey@traceyesaia.com.
+              </p>
+            ) : null}
           </form>
         </Reveal>
       </section>
