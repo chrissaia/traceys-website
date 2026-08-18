@@ -104,6 +104,7 @@ a {
   display: inline-flex;
   gap: 10px;
   padding: 0;
+  text-decoration: none;
 }
 
 .brand img {
@@ -129,8 +130,8 @@ a {
   position: relative;
 }
 
-.desktop-nav button,
-.footer-nav button {
+.desktop-nav a,
+.footer-nav a {
   align-items: center;
   background: transparent;
   border: 0;
@@ -140,9 +141,10 @@ a {
   gap: 5px;
   min-height: 44px;
   padding: 10px 12px;
+  text-decoration: none;
 }
 
-.desktop-nav button:hover,
+.desktop-nav a:hover,
 .desktop-nav .active {
   color: var(--sage-deep);
 }
@@ -164,7 +166,7 @@ a {
   display: grid;
 }
 
-.submenu button {
+.submenu a {
   justify-content: flex-start;
 }
 
@@ -198,11 +200,14 @@ a {
   top: 78px;
 }
 
-.mobile-nav button {
+.mobile-nav a {
   background: transparent;
   border: 0;
+  color: var(--ink);
   min-height: 46px;
+  padding: 10px 0;
   text-align: left;
+  text-decoration: none;
 }
 
 h1,
@@ -1368,8 +1373,7 @@ p {
 }
 
 .footer p,
-.footer a,
-.footer button {
+.footer a {
   color: rgba(255, 255, 255, 0.76);
 }
 
@@ -1378,7 +1382,7 @@ p {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.footer-nav button {
+.footer-nav a {
   justify-content: start;
   padding: 5px 0;
   text-align: left;

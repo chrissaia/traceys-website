@@ -1,0 +1,78 @@
+{
+  "siteName": "Tracey E. Saia Art Therapy",
+  "businessName": "Tracey E. Saia, Art Therapy",
+  "legalName": "A.R.T. Therapy, LLC",
+  "baseUrl": "https://traceyesaia.com",
+  "defaultImage": "https://traceyesaia.com/assets/og-tracey-art-therapy.jpg",
+  "logo": "https://images.squarespace-cdn.com/content/v1/6442caccee1a772cba82370e/cad0cf61-3b7a-4a7b-bb56-f33649573dcb/Tracey+Saia.png?format=1500w",
+  "phone": "+1-973-532-2125",
+  "email": "tracey@traceyesaia.com",
+  "address": {
+    "streetAddress": "84 Maple Avenue",
+    "addressLocality": "Morristown",
+    "addressRegion": "NJ",
+    "postalCode": "07960",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.instagram.com/traceysarttherapy/",
+    "https://www.linkedin.com/in/tracey-saia-ms-atr-bc/",
+    "https://www.facebook.com/profile.php?id=61552748771961",
+    "https://www.youtube.com/watch?v=xRrHFFM_lD8",
+    "https://www.youtube.com/watch?v=B_y9XDWqOTc",
+    "https://www.youtube.com/watch?v=fNLpwfQAlSg"
+  ],
+  "pages": {
+    "/": {
+      "title": "Art Therapy in Morristown, NJ | Tracey E. Saia",
+      "description": "Tracey E. Saia offers art therapy and psychotherapy in Morristown, NJ for adults, children, teens, families, couples, and groups.",
+      "keywords": "art therapy Morristown NJ, art therapist Morristown, psychotherapy Morristown NJ, Tracey Saia, LPAT, ATR-BC, creative therapy New Jersey, therapy for anxiety Morristown, child art therapy, teen therapy, family therapy"
+    },
+    "/services": {
+      "title": "Therapy Services in Morristown, NJ | Adults, Teens, Children & Families",
+      "description": "Therapy services with Tracey E. Saia for adults, children, teens, couples, parents, and families seeking creative, grounded support in Morristown, NJ.",
+      "keywords": "therapy services Morristown NJ, adult therapy Morristown, teen therapy Morristown, child therapy Morristown, family therapy Morristown, couples therapy Morristown, anxiety therapy NJ"
+    },
+    "/expect": {
+      "title": "What to Expect in Therapy | Tracey E. Saia Art Therapy",
+      "description": "Learn what to expect when beginning therapy with Tracey E. Saia, including the first conversation, first session, art materials, office setting, and next steps.",
+      "keywords": "what to expect therapy Morristown, first therapy session, art therapy first session, therapy office Morristown NJ, Tracey Saia therapy process"
+    },
+    "/art-therapy": {
+      "title": "What Is Art Therapy? | Art Therapy in Morristown, NJ",
+      "description": "Art therapy is a way of noticing and expressing what may be difficult to access through conversation alone. Learn how Tracey E. Saia uses creative reflection in therapy.",
+      "keywords": "what is art therapy, art therapy Morristown NJ, art psychotherapy, creative arts therapy, visual thinking therapy, expressive therapy New Jersey"
+    },
+    "/about": {
+      "title": "About Tracey E. Saia, LPAT, ATR-BC, ATCS | Art Psychotherapist",
+      "description": "Meet Tracey E. Saia, an art psychotherapist, educator, supervisor, facilitator, and corporate workshop presenter with more than 25 years of experience.",
+      "keywords": "Tracey Saia, Tracey E. Saia, art psychotherapist, LPAT, ATR-BC, ATCS, art therapy supervisor, Morristown art therapist, New Jersey art therapist"
+    },
+    "/rewired": {
+      "title": "Rewired 10-Week Course | Emotional Regulation & Mindset Support",
+      "description": "Rewired is a 10-week journey with Tracey E. Saia focused on emotional regulation, values, awareness, coping skills, mindfulness, and lasting change.",
+      "keywords": "Rewired course, emotional regulation course, mindset course, coping skills, mindfulness course, values clarification, Tracey Saia Rewired"
+    },
+    "/services/corporate-workshops": {
+      "title": "Corporate Art Therapy Workshops | Emotional Intelligence & Leadership",
+      "description": "Corporate workshops with Tracey E. Saia help teams and leaders practice emotional intelligence, communication, resilience, self-awareness, and creative problem solving.",
+      "keywords": "corporate art therapy workshops, emotional intelligence workshop, leadership workshop, team wellness workshop, creative leadership workshop, employee wellness New Jersey, corporate wellness workshop"
+    },
+    "/contact": {
+      "title": "Contact Tracey E. Saia | Art Therapy in Morristown, NJ",
+      "description": "Contact Tracey E. Saia for therapy, art therapy, Rewired, corporate workshops, speaking, supervision, or questions about beginning the work.",
+      "keywords": "contact Tracey Saia, art therapy Morristown contact, therapy Morristown NJ, Tracey Saia phone, Tracey Saia email, 84 Maple Avenue Morristown"
+    },
+    "/testimonials": {
+      "title": "Testimonials | Tracey E. Saia Art Therapy",
+      "description": "Reflections from people who have worked with Tracey E. Saia in therapy, art therapy, workshops, and creative clinical spaces.",
+      "keywords": "Tracey Saia testimonials, art therapy testimonials, Morristown therapy testimonials"
+    }
+  },
+  "aliases": {
+    "/what-to-expect-when-you-work-with-tracey": "/expect",
+    "/what-is-art-therapy": "/art-therapy",
+    "/corporate-workshops": "/services/corporate-workshops",
+    "/course": "/rewired"
+  }
+}

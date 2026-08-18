@@ -24,6 +24,7 @@ import {
   X,
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import seoData from './seo-data.json';
 import './styles.css';
 
 const images = {
@@ -259,6 +260,285 @@ type PageProps = {
   onNavigate: (href: string) => void;
 };
 
+type SeoPage = {
+  title: string;
+  description: string;
+  keywords: string;
+};
+
+const seo = seoData as typeof seoData & {
+  pages: Record<string, SeoPage>;
+  aliases: Record<string, string>;
+};
+
+function normalizeSeoPath(pathname: string) {
+  const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+  return seo.pages[cleanPath] ? cleanPath : seo.aliases[cleanPath] ?? '/';
+}
+
+function absoluteUrl(pathname: string) {
+  return `${seo.baseUrl}${pathname === '/' ? '' : pathname}`;
+}
+
+function upsertMeta(selector: string, attributes: Record<string, string>) {
+  let element = document.head.querySelector(selector) as HTMLMetaElement | HTMLLinkElement | null;
+
+  if (!element) {
+    element = attributes.rel ? document.createElement('link') : document.createElement('meta');
+    document.head.appendChild(element);
+  }
+
+  Object.entries(attributes).forEach(([key, value]) => element?.setAttribute(key, value));
+}
+
+function breadcrumbFor(pathname: string) {
+  const crumbs = [{ name: 'Home', item: seo.baseUrl }];
+
+  if (pathname === '/') return crumbs;
+  if (pathname.startsWith('/services/corporate-workshops')) {
+    return [
+      ...crumbs,
+      { name: 'Services', item: absoluteUrl('/services') },
+      { name: 'Corporate Workshops', item: absoluteUrl('/services/corporate-workshops') },
+    ];
+  }
+
+  const pageNames: Record<string, string> = {
+    '/services': 'Services',
+    '/expect': 'What to Expect',
+    '/art-therapy': 'What Is Art Therapy?',
+    '/about': 'About Tracey',
+    '/rewired': 'Rewired',
+    '/contact': 'Contact',
+    '/testimonials': 'Testimonials',
+  };
+
+  return [...crumbs, { name: pageNames[pathname] ?? 'Tracey E. Saia Art Therapy', item: absoluteUrl(pathname) }];
+}
+
+function jsonLdFor(pathname: string, page: SeoPage) {
+  const localBusiness = {
+    '@type': ['LocalBusiness', 'ProfessionalService'],
+    '@id': `${seo.baseUrl}/#business`,
+    name: seo.businessName,
+    legalName: seo.legalName,
+    url: seo.baseUrl,
+    image: seo.defaultImage,
+    logo: seo.logo,
+    telephone: seo.phone,
+    email: seo.email,
+    priceRange: '$$',
+    currenciesAccepted: 'USD',
+    paymentAccepted: 'Cash, Check, Credit Card',
+    address: {
+      '@type': 'PostalAddress',
+      ...seo.address,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Morristown' },
+      { '@type': 'AdministrativeArea', name: 'New Jersey' },
+    ],
+    sameAs: seo.sameAs,
+    knowsAbout: [
+      'Art therapy',
+      'Art psychotherapy',
+      'Anxiety',
+      'Emotional regulation',
+      'Trauma-informed therapy',
+      'Creative arts therapy',
+      'Clinical supervision',
+      'Corporate wellness workshops',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: seo.phone,
+      email: seo.email,
+      contactType: 'appointments and inquiries',
+      areaServed: 'US-NJ',
+      availableLanguage: 'English',
+    },
+    founder: { '@id': `${seo.baseUrl}/about#tracey-saia` },
+    makesOffer: [
+      { '@type': 'Offer', itemOffered: { '@id': `${seo.baseUrl}/services#therapy-services` } },
+      { '@type': 'Offer', itemOffered: { '@id': `${seo.baseUrl}/art-therapy#art-therapy` } },
+      { '@type': 'Offer', itemOffered: { '@id': `${seo.baseUrl}/services/corporate-workshops#corporate-workshops` } },
+      { '@type': 'Offer', itemOffered: { '@id': `${seo.baseUrl}/rewired#rewired` } },
+    ],
+  };
+
+  const person = {
+    '@type': 'Person',
+    '@id': `${seo.baseUrl}/about#tracey-saia`,
+    name: 'Tracey E. Saia',
+    jobTitle: 'Art Psychotherapist',
+    image: `${seo.baseUrl}/assets/tracey-headshot.webp`,
+    worksFor: { '@id': `${seo.baseUrl}/#business` },
+    affiliation: [
+      { '@type': 'Organization', name: 'American Art Therapy Association' },
+      { '@type': 'Organization', name: 'New Jersey Art Therapy Association' },
+      { '@type': 'Organization', name: 'Anxiety Institute' },
+    ],
+    knowsAbout: [
+      'Art therapy',
+      'Psychotherapy',
+      'Creative reflection',
+      'Body-based emotion',
+      'Clinical supervision',
+      'Corporate facilitation',
+    ],
+    sameAs: seo.sameAs,
+  };
+
+  const services = [
+    {
+      '@type': 'Service',
+      '@id': `${seo.baseUrl}/services#therapy-services`,
+      name: 'Therapy and Psychotherapy Services',
+      provider: { '@id': `${seo.baseUrl}/#business` },
+      areaServed: 'Morristown, NJ',
+      serviceType: 'Art therapy, psychotherapy, family therapy, teen therapy, child therapy, and couples therapy',
+    },
+    {
+      '@type': 'Service',
+      '@id': `${seo.baseUrl}/art-therapy#art-therapy`,
+      name: 'Art Therapy',
+      provider: { '@id': `${seo.baseUrl}/#business` },
+      areaServed: 'Morristown, NJ',
+      serviceType: 'Art therapy and art psychotherapy',
+    },
+    {
+      '@type': 'Service',
+      '@id': `${seo.baseUrl}/services/corporate-workshops#corporate-workshops`,
+      name: 'Corporate Art Therapy Workshops',
+      provider: { '@id': `${seo.baseUrl}/#business` },
+      areaServed: 'New Jersey and virtual programs',
+      serviceType: 'Corporate wellness, leadership, emotional intelligence, and creative team workshops',
+    },
+  ];
+
+  const webpage = {
+    '@type': 'WebPage',
+    '@id': `${absoluteUrl(pathname)}#webpage`,
+    url: absoluteUrl(pathname),
+    name: page.title,
+    description: page.description,
+    isPartOf: { '@id': `${seo.baseUrl}/#website` },
+    about: { '@id': `${seo.baseUrl}/#business` },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: pathname === '/about' ? `${seo.baseUrl}/assets/tracey-headshot.webp` : seo.defaultImage,
+    },
+  };
+
+  const breadcrumb = {
+    '@type': 'BreadcrumbList',
+    '@id': `${absoluteUrl(pathname)}#breadcrumb`,
+    itemListElement: breadcrumbFor(pathname).map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.item,
+    })),
+  };
+
+  const graph: unknown[] = [
+    {
+      '@type': 'WebSite',
+      '@id': `${seo.baseUrl}/#website`,
+      url: seo.baseUrl,
+      name: seo.siteName,
+      publisher: { '@id': `${seo.baseUrl}/#business` },
+      inLanguage: 'en-US',
+    },
+    localBusiness,
+    person,
+    webpage,
+    breadcrumb,
+  ];
+
+  if (pathname === '/services' || pathname === '/art-therapy' || pathname === '/services/corporate-workshops') {
+    graph.push(...services.filter((service) => String(service['@id']).startsWith(absoluteUrl(pathname))));
+  }
+
+  if (pathname === '/rewired') {
+    graph.push({
+      '@type': 'Course',
+      '@id': `${seo.baseUrl}/rewired#course`,
+      name: 'Rewired: A 10-Week Journey to Transform Your Mindset and Create Lasting Change',
+      description: page.description,
+      provider: { '@id': `${seo.baseUrl}/#business` },
+      hasCourseInstance: {
+        '@type': 'CourseInstance',
+        courseMode: 'online',
+        instructor: { '@id': `${seo.baseUrl}/about#tracey-saia` },
+      },
+    });
+  }
+
+  if (pathname === '/art-therapy') {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${seo.baseUrl}/art-therapy#faq`,
+      mainEntity: [
+        ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
+        ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
+        ['Is art therapy just for children?', 'No. Adults, teens, children, families, and groups can all benefit from visual thinking.'],
+      ].map(([name, text]) => ({
+        '@type': 'Question',
+        name,
+        acceptedAnswer: { '@type': 'Answer', text },
+      })),
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
+}
+
+function applySeo(pathname: string) {
+  const normalizedPath = normalizeSeoPath(pathname);
+  const page = seo.pages[normalizedPath] ?? seo.pages['/'];
+  const canonical = absoluteUrl(normalizedPath);
+
+  document.title = page.title;
+
+  upsertMeta('meta[name="description"]', { name: 'description', content: page.description });
+  upsertMeta('meta[name="keywords"]', { name: 'keywords', content: page.keywords });
+  upsertMeta('meta[name="author"]', { name: 'author', content: 'Tracey E. Saia' });
+  upsertMeta('meta[name="robots"]', { name: 'robots', content: 'index, follow, max-image-preview:large' });
+  upsertMeta('meta[name="theme-color"]', { name: 'theme-color', content: '#e0f1f4' });
+  upsertMeta('link[rel="canonical"]', { rel: 'canonical', href: canonical });
+
+  upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+  upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: seo.siteName });
+  upsertMeta('meta[property="og:title"]', { property: 'og:title', content: page.title });
+  upsertMeta('meta[property="og:description"]', { property: 'og:description', content: page.description });
+  upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
+  upsertMeta('meta[property="og:image"]', { property: 'og:image', content: seo.defaultImage });
+  upsertMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1200' });
+  upsertMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '630' });
+  upsertMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'en_US' });
+
+  upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+  upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: page.title });
+  upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: page.description });
+  upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: seo.defaultImage });
+
+  const scriptId = 'structured-data';
+  let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+
+  if (!script) {
+    script = document.createElement('script');
+    script.id = scriptId;
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(jsonLdFor(normalizedPath, page));
+}
+
 function App() {
   const [path, setPath] = useState(window.location.pathname);
   const Page = useMemo(() => routeFor(path), [path]);
@@ -276,6 +556,10 @@ function App() {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+  useEffect(() => {
+    applySeo(path);
+  }, [path]);
 
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
@@ -326,30 +610,31 @@ function routeFor(path: string) {
 function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (href: string) => void }) {
   const [open, setOpen] = useState(false);
 
-  const go = (href: string) => {
+  const go = (href: string, event?: React.MouseEvent) => {
+    event?.preventDefault();
     setOpen(false);
     onNavigate(href);
   };
 
   return (
     <header className="site-header">
-      <button className="brand" onClick={() => go('/')} aria-label="Tracey E. Saia home">
+      <a className="brand" href="/" onClick={(event) => go('/', event)} aria-label="Tracey E. Saia home">
         <img src={images.logo} alt="" />
         <span>Home</span>
-      </button>
+      </a>
       <nav className="desktop-nav" aria-label="Main navigation">
         {nav.map((item) => (
           <div className="nav-item" key={item.href}>
-            <button className={currentPath === item.href ? 'active' : ''} onClick={() => go(item.href)}>
+            <a className={currentPath === item.href ? 'active' : ''} href={item.href} onClick={(event) => go(item.href, event)}>
               {item.label}
               {item.children ? <ChevronDown size={14} /> : null}
-            </button>
+            </a>
             {item.children ? (
               <div className="submenu">
                 {item.children.map((child) => (
-                  <button key={child.href} onClick={() => go(child.href)}>
+                  <a key={child.href} href={child.href} onClick={(event) => go(child.href, event)}>
                     {child.label}
-                  </button>
+                  </a>
                 ))}
               </div>
             ) : null}
@@ -365,9 +650,9 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
       {open ? (
         <motion.nav className="mobile-nav" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           {nav.flatMap((item) => [item, ...(item.children ?? [])]).map((item) => (
-            <button key={item.href} onClick={() => go(item.href)}>
+            <a key={item.href} href={item.href} onClick={(event) => go(item.href, event)}>
               {item.label}
-            </button>
+            </a>
           ))}
         </motion.nav>
       ) : null}
@@ -1112,6 +1397,11 @@ function QuietQuote({ text, attribution }: { text: string; attribution?: string 
 }
 
 function Footer({ onNavigate }: { onNavigate: (href: string) => void }) {
+  const go = (href: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    onNavigate(href);
+  };
+
   return (
     <footer className="footer">
       <div>
@@ -1128,9 +1418,9 @@ function Footer({ onNavigate }: { onNavigate: (href: string) => void }) {
           ['Corporate', '/services/corporate-workshops'],
           ['Contact', '/contact'],
         ].map(([label, href]) => (
-          <button key={href} onClick={() => onNavigate(href)}>
+          <a key={href} href={href} onClick={(event) => go(href, event)}>
             {label}
-          </button>
+          </a>
         ))}
       </nav>
       <div className="footer-contact">
