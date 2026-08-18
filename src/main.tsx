@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight,
@@ -48,13 +48,13 @@ const links = {
   instagram: 'https://www.instagram.com/traceysarttherapy/',
   linkedin: 'https://www.linkedin.com/in/tracey-saia-ms-atr-bc/',
   facebook: 'https://www.facebook.com/profile.php?id=61552748771961',
-  newsletter: 'https://www.traceyesaia.com/',
-  coloringBook: 'https://www.traceyesaia.com/',
+  newsletter: 'http://eepurl.com/jryXtY',
+  coloringBook:
+    'https://www.amazon.com/Color-My-Feelings-Safari-coloring/dp/B0DX78RFS4/',
   podcast: 'https://www.traceyesaia.com/',
   aata: 'https://arttherapy.org/',
-  neuroArts: 'https://www.neuroartsblueprint.org',
   njata: 'https://www.njarttherapy.com/',
-  njBoard: 'https://www.njconsumeraffairs.gov/art',
+  anxietyInstitute: 'https://anxietyinstitute.com/',
 };
 
 const nav = [
@@ -113,6 +113,45 @@ const quietQuotes = [
   'You do not need to know exactly what you want to work on before reaching out.',
 ];
 
+const aboutResources = [
+  {
+    title: 'Podcasts',
+    body: 'Listen to conversations and appearances where Tracey talks about art therapy, creativity, and emotional life.',
+    href: links.podcast,
+    icon: Mic2,
+  },
+  {
+    title: 'Coloring Book',
+    body: 'Color My Feelings Safari is a gentle creative resource for naming, noticing, and exploring feelings.',
+    href: links.coloringBook,
+    icon: BookOpen,
+  },
+  {
+    title: 'Newsletter',
+    body: 'Join Tracey\'s list for reflections, updates, resources, and creative prompts.',
+    href: links.newsletter,
+    icon: Mail,
+  },
+  {
+    title: 'Instagram',
+    body: 'Follow Tracey\'s art therapy practice, resources, and creative reflections.',
+    href: links.instagram,
+    icon: Instagram,
+  },
+  {
+    title: 'LinkedIn',
+    body: 'Connect with Tracey professionally for workshops, supervision, education, and speaking.',
+    href: links.linkedin,
+    icon: Linkedin,
+  },
+  {
+    title: 'Facebook',
+    body: 'Find updates from Tracey E. Saia, Art Therapy on Facebook.',
+    href: links.facebook,
+    icon: Facebook,
+  },
+];
+
 const workshopPrograms = [
   {
     title: 'The Art of Receiving',
@@ -156,17 +195,41 @@ function App() {
   const [path, setPath] = useState(window.location.pathname);
   const page = useMemo(() => routeFor(path), [path]);
 
+  const navigate = useCallback((href: string) => {
+    const url = new URL(href, window.location.origin);
+    const nextPath = url.pathname === '/' ? '/' : url.pathname.replace(/\/$/, '');
+    window.history.pushState({}, '', `${nextPath}${url.hash}`);
+    setPath(nextPath);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   useEffect(() => {
     const onPop = () => setPath(window.location.pathname);
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  const navigate = (href: string) => {
-    window.history.pushState({}, '', href);
-    setPath(href);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      const target = event.target as Element | null;
+      const anchor = target?.closest('a[href]') as HTMLAnchorElement | null;
+
+      if (!anchor || anchor.target || anchor.hasAttribute('download')) return;
+
+      const url = new URL(anchor.href);
+      const samePageHash = url.pathname === window.location.pathname && Boolean(url.hash);
+
+      if (url.origin !== window.location.origin || samePageHash || anchor.href.startsWith('mailto:') || anchor.href.startsWith('tel:')) {
+        return;
+      }
+
+      event.preventDefault();
+      navigate(`${url.pathname}${url.hash}`);
+    };
+
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [navigate]);
 
   return (
     <div>
@@ -202,6 +265,7 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
     <header className="site-header">
       <button className="brand" onClick={() => go('/')} aria-label="Tracey E. Saia home">
         <img src={images.logo} alt="" />
+        <span>Home</span>
       </button>
       <nav className="desktop-nav" aria-label="Main navigation">
         {nav.map((item) => (
@@ -271,7 +335,7 @@ function HomePage(onNavigate: (href: string) => void) {
 
       <Section eyebrow="Introduction" title="Hi, I'm Tracey." className="intro-section">
         <div className="portrait-intro">
-          <Reveal className="portrait-card">
+          <Reveal className="portrait-card cutout-portrait">
             <img src={images.portrait} alt="Tracey Saia" />
           </Reveal>
           <Reveal className="first-person">
@@ -453,7 +517,7 @@ function ArtTherapyPage() {
           <h2>Art therapy can include many ways of thinking.</h2>
           <p>
             Tracey may use visual metaphors, timelines, drawing, writing, collage, color, images, or
-            traditional conversation. The point is not performance. The point is to see something more clearly.
+            traditional conversation. The point is not performance. The point is to see something in a different way.
           </p>
           <div className="tool-grid">
             {artTools.map((tool) => (
@@ -482,8 +546,21 @@ function AboutPage() {
       <PageHero
         eyebrow="About Tracey"
         title="Hi, I'm Tracey."
-        body="I am an art psychotherapist, educator, supervisor, facilitator, and someone who believes creative reflection can help people understand themselves with more compassion."
+        body="I am an art psychotherapist, educator, supervisor, facilitator, and someone who believes creative reflection can help people understand themselves more clearly."
+        image={images.portrait}
+        imageAlt="Tracey Saia"
       />
+      <section className="about-affiliations" aria-label="Professional affiliations">
+        {[
+          ['American Art Therapy Association', links.aata],
+          ['New Jersey Art Therapy Association', links.njata],
+          ['Anxiety Institute', links.anxietyInstitute],
+        ].map(([title, href]) => (
+          <a href={href} target="_blank" rel="noreferrer" key={title}>
+            {title}
+          </a>
+        ))}
+      </section>
       <Section eyebrow="Tracey the Person" title="Therapy is relational before it is anything else.">
         <div className="portrait-intro reverse">
           <Reveal className="first-person">
@@ -504,17 +581,17 @@ function AboutPage() {
         </div>
       </Section>
       <Credentials />
-      <Section eyebrow="Affiliations" title="Professional grounding for creative clinical work.">
-        <div className="resource-row">
-          {[
-            ['American Art Therapy Association', links.aata],
-            ['New Jersey Art Therapy Association', links.njata],
-            ['Board of Creative Arts and Activities Therapies (NJ)', links.njBoard],
-            ['NeuroArts Blueprint', links.neuroArts],
-          ].map(([title, href]) => (
-            <a className="resource-link" href={href} target="_blank" rel="noreferrer" key={title}>
-              {title}
-            </a>
+      <Section eyebrow="Resources & Media" title="Podcasts, coloring book, newsletter, and social media.">
+        <div className="media-grid">
+          {aboutResources.map(({ title, body, href, icon: Icon }) => (
+            <Reveal className="media-card" key={title}>
+              <Icon />
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <a className="text-button" href={href} target="_blank" rel="noreferrer">
+                Visit <ArrowRight size={16} />
+              </a>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -522,7 +599,7 @@ function AboutPage() {
   );
 }
 
-function RewiredPage() {
+function RewiredPage(onNavigate: (href: string) => void) {
   return (
     <>
       <PageHero
@@ -538,7 +615,7 @@ function RewiredPage() {
               inner dialogue, choices, and emotional patterns.
             </p>
             <p>
-              It is public-facing information about the program, separate from participant course controls.
+              The course gives the work a simple rhythm so people can return to the ideas between sessions and keep practicing in ordinary life.
             </p>
           </Reveal>
           <QuietQuote text="You cannot change what is going on around you until you change what is going on within you." attribution="- Zig Ziglar" />
@@ -558,9 +635,9 @@ function RewiredPage() {
       <Section eyebrow="How to Participate" title="Interested in Rewired?">
         <Reveal className="program-cta">
           <p>Reach out to Tracey to ask about upcoming availability, format, and fit.</p>
-          <a className="soft-button" href={links.email}>
+          <button className="soft-button" onClick={() => onNavigate('/contact')}>
             Ask About Rewired <ArrowRight size={17} />
-          </a>
+          </button>
         </Reveal>
       </Section>
     </>
@@ -763,7 +840,7 @@ function OfficeSection({ compact = false }: { compact?: boolean }) {
         <h2>A space to feel comfortable being yourself.</h2>
         <p>
           Sessions take place in Tracey's Morristown office, with telehealth available where appropriate.
-          Art materials may be present, but you are not expected to perform, produce, or be good at art.
+          Art materials may be present, but art is always optional and you are not expected to produce or be good at art.
         </p>
       </Reveal>
     </section>
@@ -776,8 +853,7 @@ function ArtTherapyIntro({ onNavigate }: { onNavigate: (href: string) => void })
       <div className="image-copy-section">
         <Reveal className="copy-panel">
           <p>
-            Art therapy is not about being good at art. It is a way of noticing and expressing what may be
-            difficult to access through conversation alone.
+            Art therapy is a way of noticing and expressing what may be difficult to access through conversation alone.
           </p>
           <div className="tool-grid">
             {artTools.slice(0, 8).map((tool) => (
@@ -798,7 +874,7 @@ function ArtTherapyIntro({ onNavigate }: { onNavigate: (href: string) => void })
 
 function Credentials() {
   return (
-    <Section eyebrow="Credentials" title="Experience that supports the relationship, not the other way around.">
+    <Section eyebrow="Credentials" title="Training, credentials, and experience that support the work.">
       <Reveal className="credential-row">
         {credentials.map((credential) => (
           <span key={credential}>{credential}</span>
@@ -808,15 +884,34 @@ function Credentials() {
   );
 }
 
-function PageHero({ eyebrow, title, body }: { eyebrow: string; title: string; body: string }) {
+function PageHero({
+  eyebrow,
+  title,
+  body,
+  image,
+  imageAlt,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  image?: string;
+  imageAlt?: string;
+}) {
   return (
     <section className="page-hero">
       <div className="organic-mark" />
-      <Reveal className="page-hero-inner">
-        <p className="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p>{body}</p>
-      </Reveal>
+      <div className={image ? 'page-hero-split' : ''}>
+        <Reveal className="page-hero-inner">
+          <p className="eyebrow">{eyebrow}</p>
+          <h1>{title}</h1>
+          <p>{body}</p>
+        </Reveal>
+        {image ? (
+          <Reveal className="page-hero-photo">
+            <img src={image} alt={imageAlt ?? ''} />
+          </Reveal>
+        ) : null}
+      </div>
     </section>
   );
 }

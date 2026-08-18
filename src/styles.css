@@ -97,9 +97,12 @@ a {
 }
 
 .brand {
+  align-items: center;
   background: none;
   border: 0;
   cursor: pointer;
+  display: inline-flex;
+  gap: 10px;
   padding: 0;
 }
 
@@ -108,6 +111,12 @@ a {
   height: 58px;
   object-fit: contain;
   width: 134px;
+}
+
+.brand span {
+  color: var(--sea-deep);
+  font-size: 0.92rem;
+  font-weight: 800;
 }
 
 .desktop-nav {
@@ -439,9 +448,44 @@ p {
   z-index: 1;
 }
 
+.page-hero-split {
+  align-items: center;
+  display: grid;
+  gap: clamp(30px, 6vw, 78px);
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 380px);
+  margin: 0 auto;
+  max-width: 1120px;
+  position: relative;
+  z-index: 1;
+}
+
 .page-hero-inner p:not(.eyebrow) {
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
   max-width: 750px;
+}
+
+.page-hero-photo {
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(79, 154, 164, 0.24);
+  box-shadow: 0 28px 70px rgba(56, 95, 94, 0.18);
+  overflow: hidden;
+  position: relative;
+}
+
+.page-hero-photo::before {
+  background: linear-gradient(135deg, rgba(143, 199, 209, 0.24), rgba(255, 253, 248, 0.08));
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.page-hero-photo img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .organic-mark {
@@ -497,6 +541,21 @@ p {
 
 .portrait-card {
   aspect-ratio: 4 / 5;
+}
+
+.cutout-portrait {
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.cutout-portrait img {
+  filter: drop-shadow(0 30px 38px rgba(56, 95, 94, 0.2));
+  object-fit: contain;
+}
+
+.cutout-portrait:hover img {
+  transform: translateY(-4px) scale(1.02);
 }
 
 .portrait-card:hover img,
@@ -1039,6 +1098,72 @@ p {
   text-decoration: none;
 }
 
+.about-affiliations {
+  background:
+    radial-gradient(circle at 14% 50%, rgba(143, 199, 209, 0.28), transparent 18rem),
+    linear-gradient(90deg, rgba(224, 241, 244, 0.84), rgba(255, 253, 248, 0.92), rgba(232, 224, 244, 0.5));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 22px clamp(22px, 6vw, 88px);
+}
+
+.about-affiliations a {
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid rgba(79, 154, 164, 0.18);
+  color: var(--sea-deep);
+  font-size: 0.88rem;
+  font-weight: 850;
+  padding: 10px 13px;
+  text-decoration: none;
+}
+
+.media-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1120px;
+}
+
+.media-card {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(143, 199, 209, 0.22), transparent 14rem),
+    linear-gradient(145deg, rgba(255, 253, 248, 0.94), rgba(237, 247, 248, 0.8));
+  border: 1px solid rgba(79, 154, 164, 0.18);
+  box-shadow: 0 18px 44px rgba(56, 95, 94, 0.08);
+  min-height: 255px;
+  padding: 24px;
+}
+
+.media-card:nth-child(2n) {
+  background:
+    radial-gradient(circle at 82% 10%, rgba(155, 174, 220, 0.24), transparent 14rem),
+    linear-gradient(145deg, rgba(255, 253, 248, 0.95), rgba(242, 238, 248, 0.72));
+}
+
+.media-card:nth-child(3n) {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(230, 184, 106, 0.16), transparent 14rem),
+    linear-gradient(145deg, rgba(255, 253, 248, 0.95), rgba(237, 247, 248, 0.84));
+}
+
+.media-card svg {
+  color: var(--sea-deep);
+  height: 28px;
+  width: 28px;
+}
+
+.media-card h3 {
+  margin: 18px 0 8px;
+}
+
+.media-card p {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
 .footer {
   background: #253330;
   color: white;
@@ -1165,6 +1290,7 @@ p {
 
   .portrait-intro,
   .portrait-intro.reverse,
+  .page-hero-split,
   .image-copy-section,
   .office-story,
   .corporate-hero,
@@ -1172,6 +1298,7 @@ p {
   .feature-pair,
   .two-column-copy,
   .art-flow,
+  .media-grid,
   .quote-grid,
   .office-band,
   .contact-form,
@@ -1200,6 +1327,10 @@ p {
   .brand img {
     height: 48px;
     width: 112px;
+  }
+
+  .brand span {
+    font-size: 0.84rem;
   }
 
   h1 {
