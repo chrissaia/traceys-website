@@ -1121,7 +1121,7 @@ function CorporatePage({ onNavigate }: PageProps) {
           ))}
         </div>
       </Section>
-      <Section eyebrow="What Makes It Different" title="Clinical depth meets creative facilitation.">
+      <Section eyebrow="What Makes It Different" title="A grounded, experienced approach to workplace learning.">
         <div className="outcomes">
           {['25+ years of psychotherapy experience', 'Art therapy-informed facilitation', 'Emotional intelligence made experiential', 'Virtual or in-person availability', 'A warm but professional room tone'].map((item) => (
             <Reveal className="outcome" key={item}>
