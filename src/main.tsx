@@ -356,8 +356,8 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
           </div>
         ))}
       </nav>
-      <a className="header-link" href={links.email}>
-        Reach Out
+      <a className="header-link" href={links.phone} aria-label="Call Tracey Saia">
+        Call Tracey
       </a>
       <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu">
         {open ? <X /> : <Menu />}
