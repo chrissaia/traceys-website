@@ -27,6 +27,12 @@ import { motion } from 'motion/react';
 import seoData from './seo-data.json';
 import './styles.css';
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const images = {
   ocean:
     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85',
@@ -539,6 +545,16 @@ function applySeo(pathname: string) {
   script.textContent = JSON.stringify(jsonLdFor(normalizedPath, page));
 }
 
+function trackPageView(pathname: string) {
+  if (typeof window.gtag !== 'function') return;
+
+  window.gtag('event', 'page_view', {
+    page_title: document.title,
+    page_location: `${window.location.origin}${pathname}`,
+    page_path: pathname,
+  });
+}
+
 function App() {
   const [path, setPath] = useState(window.location.pathname);
   const Page = useMemo(() => routeFor(path), [path]);
@@ -559,6 +575,7 @@ function App() {
 
   useEffect(() => {
     applySeo(path);
+    trackPageView(path);
   }, [path]);
 
   useEffect(() => {
