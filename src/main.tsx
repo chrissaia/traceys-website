@@ -486,8 +486,8 @@ function jsonLdFor(pathname: string, page: SeoPage) {
       '@type': 'FAQPage',
       '@id': `${seo.baseUrl}/art-therapy#faq`,
       mainEntity: [
-        ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
-        ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
+        ['Do I have to make art?', 'No. Visual expression can help, but not every session needs to involve art.'],
+        ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning. Stick figures are welcome.'],
         ['Is art therapy just for children?', 'No. Adults, teens, children, families, and groups can all benefit from visual thinking.'],
       ].map(([name, text]) => ({
         '@type': 'Question',
@@ -658,14 +658,17 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
           </div>
         ))}
       </nav>
-      <a className="header-link" href={links.phone} aria-label="Call Tracey Saia">
-        Call Tracey
-      </a>
+      <span className="header-phone" aria-label="Tracey Saia phone number">
+        <Phone size={16} /> 973-532-2125
+      </span>
       <button className="menu-button" onClick={() => setOpen(!open)} aria-label="Toggle menu">
         {open ? <X /> : <Menu />}
       </button>
       {open ? (
         <motion.nav className="mobile-nav" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+          <a className="mobile-nav-call" href={links.phone}>
+            <Phone size={17} /> Call 973-532-2125
+          </a>
           {nav.flatMap((item) => [item, ...(item.children ?? [])]).map((item) => (
             <a key={item.href} href={item.href} onClick={(event) => go(item.href, event)}>
               {item.label}
@@ -673,6 +676,9 @@ function Nav({ currentPath, onNavigate }: { currentPath: string; onNavigate: (hr
           ))}
         </motion.nav>
       ) : null}
+      <a className="mobile-call-button" href={links.phone}>
+        <Phone size={17} /> Call 973-532-2125
+      </a>
     </header>
   );
 }
@@ -772,7 +778,7 @@ function TherapyPage(_: PageProps) {
       <PageHero
         eyebrow="Therapy / Services"
         title="There is no single reason someone begins therapy."
-        body="Some people arrive with a clear question. Others only know that something feels off. Tracey's work creates room for both."
+        body="Some people come in knowing exactly what they want to work through. Others only know that something feels off. Tracey's work creates room for both."
       />
       <Section eyebrow="Who Tracey Works With" title="Therapy for different ages, relationships, and seasons of life.">
         <div className="text-list">
@@ -794,7 +800,7 @@ function TherapyPage(_: PageProps) {
               available to you.
             </p>
           </Reveal>
-          <QuietQuote text="Your negative self-talk may be holding you back, but it can also become something you learn to recognize." />
+          <QuietQuote text="Your negative self-talk may be holding you back, but you can learn to recognize it and respond differently." />
         </div>
       </Section>
     </>
@@ -805,7 +811,7 @@ function ExpectPage(_: PageProps) {
   const steps = [
     ['Reaching Out', 'You do not need to have the perfect words. A short message is enough to begin.'],
     ['Our First Conversation', 'Tracey listens for what you are looking for, what feels hard, and whether the fit feels right.'],
-    ['Your First Session', 'You can talk, reflect, make art, or simply begin with what feels most accessible.'],
+    ['Your First Session', "Over time, we'll work together to better understand what's happening, build new skills, and create meaningful change at a pace that feels right for you."],
     ['Working Together', 'Over time, you build awareness, practice new skills, and make meaning at a pace that feels safe.'],
   ];
 
@@ -857,8 +863,8 @@ function ExpectPage(_: PageProps) {
 
 function ArtTherapyPage(_: PageProps) {
   const faqs = [
-    ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
-    ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
+    ['Do I have to make art?', 'No. Visual expression can help, but not every session needs to involve art.'],
+    ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning. Stick figures are welcome.'],
     ['Is art therapy just for children?', 'No. Adults, teens, children, families, and groups can all benefit from visual thinking.'],
     ['Will we still talk?', 'Yes. Conversation remains part of the work. Art simply gives us another way in.'],
     ['What actually happens?', 'You might draw, write, make a timeline, use images, build a metaphor, or talk through what is present.'],
@@ -1192,7 +1198,7 @@ function ContactPage(_: PageProps) {
           <img className="contact-logo" src={images.logo} alt="Tracey Saia Art Therapy" />
           <h2>Let's talk.</h2>
           <p>Therapy, Rewired, workshops, speaking, or a question that does not fit neatly anywhere.</p>
-          <a href={links.phone}><Phone size={17} /> 973-532-2125</a>
+          <span className="contact-phone-line"><Phone size={17} /> 973-532-2125</span>
           <a href={links.email}><Mail size={17} /> tracey@traceyesaia.com</a>
           <a href={links.map} target="_blank" rel="noreferrer"><MapPin size={17} /> 84 Maple Avenue, Morristown, NJ 07960</a>
         </Reveal>
@@ -1442,7 +1448,7 @@ function Footer({ onNavigate }: { onNavigate: (href: string) => void }) {
       </nav>
       <div className="footer-contact">
         <a href={links.email}>tracey@traceyesaia.com</a>
-        <a href={links.phone}>973-532-2125</a>
+        <span>973-532-2125</span>
         <div className="socials">
           <a href={links.instagram} aria-label="Instagram" target="_blank" rel="noreferrer"><Instagram /></a>
           <a href={links.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer"><Linkedin /></a>

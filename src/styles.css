@@ -170,12 +170,14 @@ a {
   justify-content: flex-start;
 }
 
-.header-link {
+.header-phone {
+  align-items: center;
   border-bottom: 1px solid var(--sea);
   color: var(--ink);
+  display: inline-flex;
+  gap: 8px;
   font-weight: 700;
   padding: 6px 0;
-  text-decoration: none;
 }
 
 .menu-button {
@@ -204,10 +206,41 @@ a {
   background: transparent;
   border: 0;
   color: var(--ink);
+  display: flex;
+  gap: 8px;
+  align-items: center;
   min-height: 46px;
   padding: 10px 0;
   text-align: left;
   text-decoration: none;
+}
+
+.mobile-nav-call {
+  background: rgba(79, 154, 164, 0.14) !important;
+  color: var(--business) !important;
+  font-weight: 800;
+  justify-content: center;
+  margin-bottom: 4px;
+  padding: 12px 14px !important;
+}
+
+.mobile-call-button {
+  align-items: center;
+  background: linear-gradient(135deg, var(--sea-deep), var(--sage-deep));
+  box-shadow: 0 16px 36px rgba(47, 111, 123, 0.22);
+  color: white;
+  display: none;
+  font-weight: 850;
+  gap: 8px;
+  justify-content: center;
+  left: 16px;
+  min-height: 50px;
+  padding: 12px 18px;
+  position: fixed;
+  right: 16px;
+  text-decoration: none;
+  bottom: 16px;
+  z-index: 70;
 }
 
 h1,
@@ -1183,11 +1216,13 @@ p {
 }
 
 .contact-aside p,
-.contact-aside a {
+.contact-aside a,
+.contact-phone-line {
   color: rgba(255, 255, 255, 0.82);
 }
 
-.contact-aside a {
+.contact-aside a,
+.contact-phone-line {
   align-items: center;
   display: flex;
   gap: 10px;
@@ -1497,7 +1532,7 @@ p {
 
 @media (max-width: 1120px) {
   .desktop-nav,
-  .header-link {
+  .header-phone {
     display: none;
   }
 
@@ -1538,6 +1573,14 @@ p {
 }
 
 @media (max-width: 760px) {
+  body {
+    padding-bottom: 78px;
+  }
+
+  .mobile-call-button {
+    display: flex;
+  }
+
   .home-hero,
   .corporate-hero {
     min-height: auto;

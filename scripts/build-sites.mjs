@@ -297,8 +297,8 @@ function jsonLdFor(pathname, page) {
       '@type': 'FAQPage',
       '@id': `${seoData.baseUrl}/art-therapy#faq`,
       mainEntity: [
-        ['Do I have to make art?', 'No. Art materials may help, but not every session needs to involve art.'],
-        ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning.'],
+        ['Do I have to make art?', 'No. Visual expression can help, but not every session needs to involve art.'],
+        ['What if I am not creative?', 'You do not need artistic skill. The process is about expression, noticing, and meaning. Stick figures are welcome.'],
         ['Is art therapy just for children?', 'No. Adults, teens, children, families, and groups can all benefit from visual thinking.'],
       ].map(([name, text]) => ({
         '@type': 'Question',
