@@ -1204,6 +1204,9 @@ function ContactPage(_: PageProps) {
         </Reveal>
         <Reveal>
           <form className="contact-form" onSubmit={submit}>
+            <p className="form-note">
+              This message will be sent directly to Tracey's email.
+            </p>
             <label>
               Name
               <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />

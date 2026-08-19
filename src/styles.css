@@ -1236,6 +1236,16 @@ p {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.form-note {
+  background: rgba(79, 154, 164, 0.12);
+  color: var(--business);
+  font-weight: 750;
+  grid-column: 1 / -1;
+  line-height: 1.45;
+  margin: 0;
+  padding: 13px 15px;
+}
+
 .contact-form label {
   color: var(--ink);
   display: grid;
