@@ -811,8 +811,8 @@ function ExpectPage(_: PageProps) {
   const steps = [
     ['Reaching Out', 'You do not need to have the perfect words. A short message is enough to begin.'],
     ['Our First Conversation', 'Tracey listens for what you are looking for, what feels hard, and whether the fit feels right.'],
-    ['Your First Session', "Over time, we'll work together to better understand what's happening, build new skills, and create meaningful change at a pace that feels right for you."],
-    ['Working Together', 'Over time, you build awareness, practice new skills, and make meaning at a pace that feels safe.'],
+    ['Your First Session', 'You can talk, reflect, make art, or simply start wherever feels most comfortable'],
+    ['Working Together', "Over time, we'll work together to better understand what's happening, build new skills, and create meaningful change at a pace that feels right for you."],
   ];
 
   return (
